@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Money Tracker Dashboard</title>
+    <link rel="stylesheet" href="{% static 'tracker/style.css' %}">
+</head>
+<body>
+
+    <h1>Dashboard</h1>
+
+    <!-- Accounts block -->
+    <div class="box-header">
+        <h2>Accounts</h2>
+        <button class="add-btn">+ Add Account</button>
+    </div>
+    
+    <!-- Horizontal Scrollable Block -->
+    <div class="account-scroll">
+        <div class="account-block">💵<br>Cash<br>₹5000</div>
+        <div class="account-block">🏦<br>Bank<br>₹15000</div>
+        <div class="account-block">💰<br>Savings<br>₹10000</div>
+    </div>
+
+    <!-- Income and Expense Tables -->
+    <div class="income-expense">
+        <div class="box">
+            <div class="box-header">
+                <h2>Income</h2>
+                <button class="add-btn">+ Add Income</button>
+            </div>
+            <table>
+                <tr><th>Category</th><th>Amount</th></tr>
+                <tr><td>Salary</td><td>₹30,000</td></tr>
+                <tr><td>Freelance</td><td>₹5,000</td></tr>
+            </table>
+        </div>
+        <div class="box">
+            <div class="box-header">
+                <h2>Expense</h2>
+                <button class="add-btn">+ Add Expense</button>
+            </div>
+            <table>
+                <tr><th>Category</th><th>Amount</th></tr>
+                <tr><td>Food</td><td>₹2,000</td></tr>
+                <tr><td>Rent</td><td>₹8,000</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Records and Graph -->
+    <div class="bottom-section">
+        <div class="records">
+            <h2>Daily Transactions</h2>
+
+            {% for tx in transactions %}
+            <div class="record-item">
+                <span class="record-icon">{{ tx.icon }}</span>
+                <div class="record-info">
+                    <div class="category">{{ tx.category }}</div>
+                    <div class="note">{{ tx.note }}</div>
+                </div>
+                    <div class="amount {% if tx.type == 'income' %}income{% else %}expense{% endif %}">
+                    {% if tx.type == 'income' %}+{% else %}-{% endif %}₹{{ tx.amount }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+            <div class="graph">
+                <h2>Statistics</h2>
+                <!-- Graph placeholder -->
+                <canvas id="statsChart" width="300" height="200"></canvas>
+            </div>
+    </div>
+
+    <!-- Chart.js (optional if you want graphs) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('statsChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Income', 'Expense'],
+                datasets: [{
+                    label: 'Monthly Summary',
+                    data: [35000, 10000],
+                    backgroundColor: ['green', 'red']
+                }]
+            }
+        });
+    </script>
+
+</body>
+</html>

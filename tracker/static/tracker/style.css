@@ -1,0 +1,126 @@
+body {
+    font-family: sans-serif;
+    margin: 20px;
+}
+
+/* Horizontal scroll block */
+.account-scroll {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    margin-bottom: 30px;
+}
+
+.account-block {
+    min-width: 150px;
+    padding: 1rem;
+    background: #f0f0f0;
+    border-radius: 8px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+/* Income and Expense section */
+.income-expense {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 30px;
+}
+
+.box {
+    flex: 1;
+    background: #f9f9f9;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background-color: #eee;
+}
+
+/* Records and Graph section */
+.bottom-section {
+    display: flex;
+    gap: 2rem;
+}
+
+.records {
+    flex: 1;
+    min-height: 600px;
+    max-height: 600px;
+    max-width: 400px;
+    overflow-y: auto;
+    background: #f9f9f9;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.record-item {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.amount.income { color: green; font-weight: bold; }
+.amount.expense { color: red; font-weight: bold; }
+
+.graph {
+    flex: 1;
+    padding: 1rem;
+    background: #f0f0f0;
+    border-radius: 8px;
+}
+
+.box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.add-btn:hover {
+    background-color: #45a049;
+}
+
+.box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.add-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.add-btn:hover {
+    background-color: #45a049;
+}
