@@ -1,0 +1,16 @@
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Income</button>
+</form>
+
+<table class="income-table">
+    <thead>
+        <tr><th>Category</th><th>Amount</th></tr>
+    </thead>
+    <tbody>
+        {% for item in incomes %}
+            <tr><td>{{ item.category }}</td><td>₹{{ item.amount }}</td></tr>
+        {% endfor %}
+    </tbody>
+</table>

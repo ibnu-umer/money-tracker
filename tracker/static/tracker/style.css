@@ -52,7 +52,7 @@ body {
 .add-btn-expandable {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     overflow: hidden;
     white-space: nowrap;
     background-color: #cbebf3;
@@ -149,6 +149,139 @@ table td:last-child {
     height: 100%;
 }
 
+
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4); /* Dark background */
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+  position: relative;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.modal-title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.modern-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+select,
+textarea {
+  padding: 0.75rem 1rem; /* Top/Bottom: 0.75rem, Left/Right: 1rem */
+  width: 100%;
+  box-sizing: border-box; /* Ensures padding doesn't overflow the container */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: white;
+}
+
+
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  display: block;
+  color: #555;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.submit-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: #0056b3;
+}
+
+.close {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #888;
+  transition: color 0.3s;
+}
+
+.close:hover {
+  color: #000;
+}
+
+
+
+select {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+  background-color: white;
+}
+
+select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+textarea {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+
+
 /* Records Widget */
 .records {
     flex: none;
@@ -209,6 +342,7 @@ table td:last-child {
 
 .category {
     font-weight: bold;
+    padding: 0.6rem;
 }
 
 .note {

@@ -31,13 +31,20 @@
         <div class="box">
             <div class="box-header">
                 <h2>Income</h2>
-                <button class="add-btn-expandable">
-                    <img src="{% static 'tracker/icons/add-icon.svg' %}" alt="Add" class="icon-svg">
-                    <span class="label">Add Income</span>
+                <button type="button" class="add-btn-expandable" id="openIncomeModalBtn">
+                    <img src="{% static 'tracker/icons/add-icon.svg' %}" class="icon-svg">Add Income
                 </button>
 
+                <div id="incomeModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" id="closeIncomeModal">&times;</span>
+                    <h2>Add Income</h2>
+                    {% include 'tracker/includes/add_transaction_form.html' with form_id="incomeForm" action_url='add_income' categories=income_categories today=today %}
+                </div>
+                </div>
             </div>
             
+
             <table class="income-table">
                 <tr><th>Category</th><th>Amount</th></tr>
                 <tr><td>Salary</td><td>₹30,000</td></tr>
@@ -48,10 +55,17 @@
         <div class="box">
             <div class="box-header">
                 <h2>Expense</h2>
-                <button class="add-btn-expandable">
-                    <img src="{% static 'tracker/icons/add-icon.svg' %}" alt="Add" class="icon-svg">
-                    <span class="label">Add Expense</span>
+                <button type="button" class="add-btn-expandable" id="openExpenseModalBtn">
+                    <img src="{% static 'tracker/icons/add-icon.svg' %}" class="icon-svg">Add Expense
                 </button>
+                <!-- Expense Modal -->
+                <div id="expenseModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" id="closeExpenseModal">&times;</span>
+                    <h2>Add Expense</h2>
+                    {% include 'tracker/includes/add_transaction_form.html' with form_id="expenseForm" action_url='add_expense' categories=expense_categories today=today %}
+                </div>
+                </div>
             </div>
 
             <table class="expense-table">
@@ -187,6 +201,48 @@
             }]
         }
     });
+
+     // INCOME MODAL
+    const incomeModal = document.getElementById("incomeModal");
+    const openIncomeBtn = document.getElementById("openIncomeModalBtn");
+    const closeIncomeBtn = document.getElementById("closeIncomeModal");
+
+    openIncomeBtn.onclick = () => {
+        incomeModal.style.display = "block";
+    };
+
+    closeIncomeBtn.onclick = () => {
+        incomeModal.style.display = "none";
+    };
+
+    // EXPENSE MODAL
+    const expenseModal = document.getElementById("expenseModal");
+    const openExpenseBtn = document.getElementById("openExpenseModalBtn");
+    const closeExpenseBtn = document.getElementById("closeExpenseModal");
+
+    openExpenseBtn.onclick = () => {
+        expenseModal.style.display = "block";
+    };
+
+    closeExpenseBtn.onclick = () => {
+        expenseModal.style.display = "none";
+    };
+
+    window.onclick = function (event) {
+        if (event.target === incomeModal) {
+            incomeModal.style.display = "none";
+        }
+        if (event.target === expenseModal) {
+            expenseModal.style.display = "none";
+        }
+    };
+
+
+    flatpickr("#date", {
+        dateFormat: "Y-m-d",
+        defaultDate: "today"
+    });
+
     </script>
 
 

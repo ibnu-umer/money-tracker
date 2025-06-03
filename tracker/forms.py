@@ -1,7 +1,10 @@
 from django import forms
-from .models import Transaction
+from .models import Income
 
-class TransactionForm(forms.ModelForm):
+
+
+class IncomeForm(forms.ModelForm):
     class Meta:
-        model = Transaction
-        fields = ['date', 'description', 'amount', 'category']
+        model = Income
+        fields = ['category', 'amount']
+
