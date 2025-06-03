@@ -10,6 +10,14 @@ def home(request):
         {'icon': '🚌', 'category': 'Transport', 'note': '01 Jun - Bus fare', 'amount': 150, 'type': 'expense'},
         {'icon': '💼', 'category': 'Salary', 'note': '02 Jun - Monthly salary', 'amount': 30000, 'type': 'income'},
         {'icon': '☕', 'category': 'Coffee', 'note': '02 Jun - Evening coffee', 'amount': 100, 'type': 'expense'},
+        {'icon': '🛒', 'category': 'Groceries', 'note': '01 Jun - Bought vegetables', 'amount': 300, 'type': 'income'},
+        {'icon': '🚌', 'category': 'Transport', 'note': '01 Jun - Bus fare', 'amount': 150, 'type': 'expense'},
+        {'icon': '💼', 'category': 'Salary', 'note': '02 Jun - Monthly salary', 'amount': 30000, 'type': 'income'},
+        {'icon': '☕', 'category': 'Coffee', 'note': '02 Jun - Evening coffee', 'amount': 100, 'type': 'expense'},
+        {'icon': '🛒', 'category': 'Groceries', 'note': '01 Jun - Bought vegetables', 'amount': 300, 'type': 'income'},
+        {'icon': '🚌', 'category': 'Transport', 'note': '01 Jun - Bus fare', 'amount': 150, 'type': 'expense'},
+        {'icon': '💼', 'category': 'Salary', 'note': '02 Jun - Monthly salary', 'amount': 30000, 'type': 'income'},
+        {'icon': '☕', 'category': 'Coffee', 'note': '02 Jun - Evening coffee', 'amount': 100, 'type': 'expense'},
     ]
     return render(request, 'tracker/home.html', {'transactions': transactions})
     

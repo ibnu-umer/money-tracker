@@ -54,20 +54,42 @@ th {
 /* Records and Graph section */
 .bottom-section {
     display: flex;
-    gap: 2rem;
+    gap: 1rem;
+    height: 100%; /* or a fixed height like 400px */
 }
 
 .records {
-    flex: 1;
-    min-height: 600px;
-    max-height: 600px;
-    max-width: 400px;
-    min-width: 400px;
-    overflow-y: auto;
-    background: #f9f9f9;
+    flex: none;
+    width: 350px;
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+    background: #f0f0f0;
     border-radius: 8px;
     padding: 1rem;
+    overflow-y: auto;
 }
+
+/* WebKit (Chrome, Edge, Safari) */
+.records::-webkit-scrollbar {
+    width: 8px;
+}
+
+.records::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 8px;
+}
+
+.records::-webkit-scrollbar-thumb {
+    background-color: #c1c1c1;
+    border-radius: 8px;
+    border: 2px solid #f0f0f0;
+}
+
+.records::-webkit-scrollbar-thumb:hover {
+    background-color: #7e7e7e;
+}
+
 
 .record-item {
     display: flex;
