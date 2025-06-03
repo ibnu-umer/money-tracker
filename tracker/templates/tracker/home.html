@@ -50,7 +50,7 @@
     </div>
 
 
-    
+
     <!-- Records and Graph -->
     <div class="bottom-section">
         <div class="records">
@@ -74,27 +74,109 @@
 
             <div class="graph">
                 <h2>Statistics</h2>
-                <!-- Graph placeholder -->
-                <canvas id="statsChart" width="300" height="200"></canvas>
+                <div class="chart-layout">
+                    <!-- Wide container for both bar and line charts -->
+                    <div class="chart-item wide">
+                        <h3>Monthly Summary</h3>
+                        <canvas id="barChart"></canvas>
+                        <h3 style="margin-top: 1rem;">Income vs Expense Trend</h3>
+                        <canvas id="trendLineChart"></canvas>
+                    </div>
+
+                    <!-- Expense Breakdown -->
+                    <div class="chart-item small">
+                        <h3>Expense Breakdown</h3>
+                        <canvas id="pieChart"></canvas>
+                    </div>
+
+                    <!-- Cumulative Balance -->
+                    <div class="chart-item small">
+                        <h3>Cumulative Balance</h3>
+                        <canvas id="lineChart"></canvas>
+                    </div>
+                </div>
             </div>
+
     </div>
 
-    <!-- Chart.js (optional if you want graphs) -->
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        const ctx = document.getElementById('statsChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Income', 'Expense'],
-                datasets: [{
-                    label: 'Monthly Summary',
-                    data: [35000, 10000],
-                    backgroundColor: ['green', 'red']
-                }]
+    const barCtx = document.getElementById('barChart').getContext('2d');
+    new Chart(barCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr'],
+            datasets: [{
+                label: 'Income',
+                data: [30000, 28000, 32000, 35000],
+                backgroundColor: 'green'
+            }, {
+                label: 'Expense',
+                data: [15000, 16000, 14000, 17000],
+                backgroundColor: 'red'
+            }]
+        }
+    });
+
+    const trendCtx = document.getElementById('trendLineChart').getContext('2d');
+    new Chart(trendCtx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr'],
+            datasets: [
+                {
+                    label: 'Income',
+                    data: [30000, 28000, 32000, 35000],
+                    borderColor: 'green',
+                    fill: false,
+                    tension: 0.3
+                },
+                {
+                    label: 'Expense',
+                    data: [15000, 16000, 14000, 17000],
+                    borderColor: 'red',
+                    fill: false,
+                    tension: 0.3
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: true }
             }
-        });
+        }
+    });
+    new Chart(document.getElementById('pieChart'), {
+        type: 'pie',
+        data: {
+            labels: ['Food', 'Rent', 'Travel', 'Others'],
+            datasets: [{
+                label: 'Expenses',
+                data: [2000, 8000, 1500, 1000],
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#888']
+            }]
+        }
+    });
+
+    new Chart(document.getElementById('lineChart'), {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr'],
+            datasets: [{
+                label: 'Cumulative Balance',
+                data: [15000, 27000, 45000, 63000],
+                borderColor: '#4B0082',
+                fill: true,
+                backgroundColor: 'rgba(75, 0, 130, 0.1)',
+                tension: 0.3
+            }]
+        }
+    });
     </script>
+
+
 
 </body>
 </html>
