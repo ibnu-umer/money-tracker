@@ -4,6 +4,11 @@ body {
     margin: 20px;
 }
 
+.icon-svg {
+    filter: invert(36%) sepia(64%) saturate(363%) hue-rotate(100deg) brightness(90%) contrast(85%);
+}
+
+
 /* Account Scroll Section */
 .account-scroll {
     display: flex;
@@ -44,18 +49,46 @@ body {
     margin: 10px 0;
 }
 
-.add-btn {
-    background-color: #4CAF50;
-    color: white;
+.add-btn-expandable {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow: hidden;
+    white-space: nowrap;
+    background-color: #cbebf3;
+    color: rgb(0, 0, 0);
     border: none;
-    padding: 6px 12px;
-    border-radius: 6px;
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 0.95rem;
     cursor: pointer;
-    font-size: 0.9rem;
+    transition: width 0.3s ease, background-color 0.3s;
+    width: 40px; 
+    position: relative;
 }
 
-.add-btn:hover {
-    background-color: #45a049;
+.add-btn-expandable:hover {
+    width: 140px; /* expanded width */
+    background-color: #cbebf3;
+}
+
+.add-btn-expandable .icon-svg {
+    width: 20px;
+    height: 20px;
+}
+
+.add-btn-expandable .label {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.add-btn-expandable:hover .label {
+    opacity: 1;
+}
+
+.icon-svg {
+    width: 24px;   /* Change this to your desired size */
+    height: 24px;
 }
 
 /* Tables */
@@ -80,7 +113,7 @@ th {
 }
 
 td {
-    background-color: #fcfcfc;
+    background-color: #f8f8f8;
     color: #444;
     border-top: 1px solid #eee;
 }
@@ -100,8 +133,8 @@ table td:last-child {
 
 /* Income / Expense Table Color Themes */
 .income-table th {
-    background-color: #e8f5e9;
-    color: #2e7d32;
+    background-color: #d7fada;
+    color: #3eb844;
 }
 
 .expense-table th {

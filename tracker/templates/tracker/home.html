@@ -13,7 +13,10 @@
     <!-- Accounts block -->
     <div class="box-header">
         <h2>Accounts</h2>
-        <button class="add-btn">+ Add Account</button>
+        <button class="add-btn-expandable">
+            <img src="{% static 'tracker/icons/add-icon.svg' %}" alt="Add" class="icon-svg">
+            <span class="label">Add Account</span>
+        </button>
     </div>
     
     <!-- Horizontal Scrollable Block -->
@@ -28,7 +31,11 @@
         <div class="box">
             <div class="box-header">
                 <h2>Income</h2>
-                <button class="add-btn">+Add Income</button>
+                <button class="add-btn-expandable">
+                    <img src="{% static 'tracker/icons/add-icon.svg' %}" alt="Add" class="icon-svg">
+                    <span class="label">Add Income</span>
+                </button>
+
             </div>
             
             <table class="income-table">
@@ -41,7 +48,10 @@
         <div class="box">
             <div class="box-header">
                 <h2>Expense</h2>
-                <button class="add-btn">+Add expense</button>
+                <button class="add-btn-expandable">
+                    <img src="{% static 'tracker/icons/add-icon.svg' %}" alt="Add" class="icon-svg">
+                    <span class="label">Add Expense</span>
+                </button>
             </div>
 
             <table class="expense-table">
