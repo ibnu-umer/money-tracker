@@ -1,9 +1,10 @@
+/* General Reset & Base */
 body {
     font-family: sans-serif;
     margin: 20px;
 }
 
-/* Horizontal scroll block */
+/* Account Scroll Section */
 .account-scroll {
     display: flex;
     overflow-x: auto;
@@ -20,44 +21,102 @@ body {
     flex-shrink: 0;
 }
 
-/* Income and Expense section */
+/* Income and Expense Section */
 .income-expense {
     display: flex;
     justify-content: space-between;
     gap: 2rem;
-    margin-bottom: 30px;
+    margin-bottom: 2rem;
 }
 
 .box {
     flex: 1;
-    background: #f9f9f9;
-    border-radius: 8px;
-    padding: 1rem;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
+.box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.add-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.add-btn:hover {
+    background-color: #45a049;
+}
+
+/* Tables */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 10px;
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 th, td {
-    border: 1px solid #ddd;
-    padding: 6px;
+    padding: 10px 14px;
     text-align: left;
 }
 
 th {
-    background-color: #eee;
+    background-color: #f1f1f1;
+    color: #333;
+    font-weight: 600;
 }
 
-/* Records and Graph section */
+td {
+    background-color: #fcfcfc;
+    color: #444;
+    border-top: 1px solid #eee;
+}
+
+table thead tr {
+    border-bottom: 2px solid #999;
+}
+
+table tr:hover td {
+    background-color: #f9f9f9;
+}
+
+table th:last-child,
+table td:last-child {
+    text-align: right;
+}
+
+/* Income / Expense Table Color Themes */
+.income-table th {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.expense-table th {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+/* Bottom Section Layout */
 .bottom-section {
     display: flex;
     gap: 1rem;
-    height: 100%; /* or a fixed height like 400px */
+    height: 100%;
 }
 
+/* Records Widget */
 .records {
     flex: none;
     width: 350px;
@@ -70,7 +129,7 @@ th {
     overflow-y: auto;
 }
 
-/* WebKit (Chrome, Edge, Safari) */
+/* Custom Scrollbar - WebKit */
 .records::-webkit-scrollbar {
     width: 8px;
 }
@@ -90,7 +149,7 @@ th {
     background-color: #7e7e7e;
 }
 
-
+/* Record Item Layout */
 .record-item {
     display: flex;
     align-items: flex-start;
@@ -137,13 +196,15 @@ th {
     color: red;
 }
 
-
+/* Graph Section */
 .graph {
+    flex: 1;
     padding: 1rem;
     background: #f0f0f0;
     border-radius: 8px;
 }
 
+/* Chart Layout */
 .chart-layout {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -168,7 +229,7 @@ th {
     height: auto !important;
 }
 
-/* Custom layout */
+/* Custom Chart Positioning */
 .chart-item.wide {
     grid-column: 1 / 2;
     grid-row: 1 / 3;
@@ -182,46 +243,4 @@ th {
 .chart-item.small:nth-child(3) {
     grid-column: 2 / 3;
     grid-row: 2 / 3;
-}
-
-
-.box-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.add-btn {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.9rem;
-}
-
-.add-btn:hover {
-    background-color: #45a049;
-}
-
-.box-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 10px 0;
-}
-
-.add-btn {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.9rem;
-}
-
-.add-btn:hover {
-    background-color: #45a049;
 }
