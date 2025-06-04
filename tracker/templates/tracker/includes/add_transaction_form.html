@@ -3,6 +3,7 @@
     <div class="form-group">
         <label for="category">Category</label>
         <select name="category" required>
+            <option value="" disabled selected hidden>Select a category</option>
             {% for category in categories %}
                 <option value="{{ category }}">{{ category }}</option>
             {% endfor %}
