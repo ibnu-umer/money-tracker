@@ -60,25 +60,3 @@ def add_expense(request):
 
 
 
-
-def income_list_create(request):
-    form = IncomeForm()
-    incomes = Income.objects.all()
-
-    if request.method == 'POST':
-        form = IncomeForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('income')  # replace with your actual URL name
-
-    return render(request, 'tracker/income.html', {'form': form, 'incomes': incomes})
-
-
-
-def dashboard(request):
-    context = {
-        'income_categories': ['Salary', 'Freelance', 'Bonus'],
-        'expense_categories': ['Food', 'Rent', 'Transport'],
-        'today': date.today().isoformat()
-    }
-    return render(request, 'tracker/home.html', context)
