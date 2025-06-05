@@ -31,19 +31,19 @@ def add_transaction(request):
         note = request.POST.get("note")
         tx_type = request.POST.get("tx_type")
         
-        # Add to transactions DB
-        Transaction.objects.create(
-            date=date, 
-            category=category,
-            amount=amount,
-            type=tx_type,
-            note=note,
-        )
-        
         # Add to Category DB
         cat = Category.objects.get(name=category, type=tx_type)
         cat.total += Decimal(amount)
         cat.save()
+        
+        # Add to transactions DB
+        Transaction.objects.create(
+            date=date, 
+            category=cat,
+            amount=amount,
+            type=tx_type,
+            note=note,
+        )
         
         return redirect("home")
 
