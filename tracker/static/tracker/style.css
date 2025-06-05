@@ -9,24 +9,6 @@ body {
 }
 
 
-/* Account Scroll Section */
-.account-scroll {
-    display: flex;
-    overflow-x: auto;
-    gap: 1rem;
-    margin-bottom: 30px;
-}
-
-.account-block {
-    min-width: 150px;
-    padding: 1rem;
-    background: #f0f0f0;
-    border-radius: 8px;
-    text-align: center;
-    flex-shrink: 0;
-}
-
-
 .income-expense {
     display: flex;
     gap: 20px;
