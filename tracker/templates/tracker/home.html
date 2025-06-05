@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <title>Money Tracker</title>
     <link rel="stylesheet" href="{% static 'tracker/style.css' %}">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
 <body>
 
@@ -240,11 +243,12 @@
     };
 
 
-    flatpickr("#date", {
-        dateFormat: "Y-m-d",
-        defaultDate: "today"
+    document.addEventListener('DOMContentLoaded', function () {
+        flatpickr("#dateInput", {
+        dateFormat: "Y-m-d"
+        });
     });
-
+    
     </script>
 
 

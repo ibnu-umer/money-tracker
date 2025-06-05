@@ -1,0 +1,13 @@
+
+
+<form method="POST" action="{% url 'edit_categories' %}" class="add-category-form">
+    {% csrf_token %}
+    <input type="hidden" name="id" value="{{ category.id }}">
+    <input type="text" name="name" value="{{ category.name }}" required>
+    <input type="text" name="icon" value="{{ category.icon }}">
+    <select name="type" required>
+        <option value="income" {% if category.type == 'income' %}selected{% endif %}>Income</option>
+        <option value="expense" {% if category.type == 'expense' %}selected{% endif %}>Expense</option>
+    </select>
+    <button type="submit">Edit</button>
+</form>
