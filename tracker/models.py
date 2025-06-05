@@ -20,21 +20,12 @@ class Category(models.Model):
 
 
 
-class Income(models.Model):
+class Transaction(models.Model):
     id = models.AutoField(primary_key=True)
     date = models.DateField()
+    type = models.CharField(max_length=10)
     category = models.CharField(max_length=100)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     note = models.CharField(max_length=500)
-    
-    
-    
-class Expense(models.Model):
-    id = models.AutoField(primary_key=True)
-    date = models.DateField()
-    category = models.CharField(max_length=100)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    note = models.CharField(max_length=500)
-    
-    
+
     

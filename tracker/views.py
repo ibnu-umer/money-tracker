@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from .forms import IncomeForm
-from .models import Category, Income, Expense
+from .models import Category, Transaction
 from datetime import date
+from decimal import Decimal
 
 
 
@@ -9,21 +9,7 @@ def home(request):
     income_categories = Category.objects.filter(type='income').order_by('name')
     expense_categories = Category.objects.filter(type='expense').order_by('name')
     
-    transactions = [
-        {'icon': '🛒', 'category': 'Groceries', 'note': '01 Jun - Bought vegetables', 'amount': 300, 'type': 'income'},
-        {'icon': '🚌', 'category': 'Transport', 'note': '01 Jun - Bus fare', 'amount': 150, 'type': 'expense'},
-        {'icon': '💼', 'category': 'Salary', 'note': '02 Jun - Monthly salary', 'amount': 30000, 'type': 'income'},
-        {'icon': '☕', 'category': 'Health', 'note': '02 Jun - Evening coffee', 'amount': 100, 'type': 'expense'},
-        {'icon': '🛒', 'category': 'Groceries', 'note': '01 Jun - Bought vegetables', 'amount': 300, 'type': 'income'},
-        {'icon': '🚌', 'category': 'Transport', 'note': '01 Jun - Bus fare', 'amount': 150, 'type': 'expense'},
-        {'icon': '💼', 'category': 'Salary', 'note': '02 Jun - Monthly salary', 'amount': 30000, 'type': 'income'},
-        {'icon': '☕', 'category': 'Health', 'note': '02 Jun - Evening coffee', 'amount': 100, 'type': 'expense'},
-        {'icon': '🛒', 'category': 'Groceries', 'note': '01 Jun - Bought vegetables', 'amount': 300, 'type': 'income'},
-        {'icon': '🚌', 'category': 'Transport', 'note': '01 Jun - Bus fare', 'amount': 150, 'type': 'expense'},
-        {'icon': '💼', 'category': 'Salary', 'note': '02 Jun - Monthly salary', 'amount': 30000, 'type': 'income'},
-        {'icon': '☕', 'category': 'Health', 'note': '02 Jun - Evening coffee', 'amount': 100, 'type': 'expense'},
-    ]
-    
+    transactions = Transaction.objects.all().order_by('date')
     
     return render(
         request, 'tracker/home.html',
@@ -37,26 +23,30 @@ def home(request):
     
 
 
-
-
-def add_income(request):
-    if request.method == "POST":
+def add_transaction(request):
+    if request.method == 'POST':
         date = request.POST.get("date")
         category = request.POST.get("category")
         amount = request.POST.get("amount")
         note = request.POST.get("note")
-        Income.objects.create(date=date, category=category, amount=amount, note=note)
-        return redirect("home") 
-    
-    
-def add_expense(request):
-    if request.method == "POST":
-        date = request.POST.get("date")
-        category = request.POST.get("category")
-        amount = request.POST.get("amount")
-        note = request.POST.get("note")
-        Expense.objects.create(date=date, category=category, amount=amount, note=note)
-        return redirect("home") 
+        tx_type = request.POST.get("tx_type")
+        
+        # Add to transactions DB
+        Transaction.objects.create(
+            date=date, 
+            category=category,
+            amount=amount,
+            type=tx_type,
+            note=note,
+        )
+        
+        # Add to Category DB
+        cat = Category.objects.get(name=category, type=tx_type)
+        cat.total += Decimal(amount)
+        cat.save()
+        
+        return redirect("home")
+
 
 
 

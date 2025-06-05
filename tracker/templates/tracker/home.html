@@ -26,7 +26,7 @@
                 <div class="modal-content">
                     <span class="close" id="closeIncomeModal">&times;</span>
                     <h2>Add Income</h2>
-                    {% include 'tracker/includes/add_transaction_form.html' with form_id="incomeForm" action_url='add_income' categories=income_categories today=today %}
+                    {% include 'tracker/includes/add_transaction_form.html' with form_id="incomeForm" action_url='add_transaction' categories=income_categories today=today tx_type='income' %}
                 </div>
                 </div>
             </div>
@@ -51,7 +51,7 @@
                 <div class="modal-content">
                     <span class="close" id="closeExpenseModal">&times;</span>
                     <h2>Add Expense</h2>
-                    {% include 'tracker/includes/add_transaction_form.html' with form_id="expenseForm" action_url='add_expense' categories=expense_categories today=today %}
+                    {% include 'tracker/includes/add_transaction_form.html' with form_id="expenseForm" action_url='add_transaction' categories=expense_categories today=today tx_type='expense' %}
                 </div>
                 </div>
             </div>
