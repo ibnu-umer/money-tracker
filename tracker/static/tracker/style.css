@@ -327,6 +327,7 @@ textarea {
 .record-icon {
     font-size: 24px;
     margin-right: 15px;
+    user-select: none;
 }
 
 .record-info {
@@ -344,11 +345,13 @@ textarea {
 
 .category {
     font-weight: bold;
+    user-select: none;
 }
 
 .note {
     font-size: 0.9em;
     color: #666;
+    user-select: none;
 }
 
 .amount {
@@ -356,6 +359,7 @@ textarea {
     font-size: 1em;
     min-width: 80px;
     text-align: right;
+    user-select: none;
 }
 
 .amount.income {
@@ -366,6 +370,27 @@ textarea {
     color: red;
 }
 
+.date-label-container {
+  display: inline-block;
+  margin-top: 20px;
+  margin-bottom: 0; 
+}
+
+.date-label {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #333;
+  padding: 1px 0;
+  user-select: none;
+}
+
+.date-underline {
+  border: none;
+  height: 2px;
+  width: 100%;  
+  background-color: #ccc;
+  margin: 2px 0 0 0; 
+}
 
 /* Graph Section */
 .graph {

@@ -71,27 +71,34 @@
     <div class="bottom-section">
         <div class="records">
             <h2>Daily Transactions</h2>
+            {% regroup transactions by date as grouped_transactions %}
 
-            {% for tx in transactions %}
-            <div class="record-item"
-                data-id="{{ tx.id }}"
-                data-type="{{ tx.type }}"
-                data-category="{{ tx.category }}"
-                data-note="{{ tx.note }}"
-                data-amount="{{ tx.amount }}"
-                data-date="{{ tx.date|date:'Y-m-d' }}">
-
-                <span class="record-icon">{{ tx.category.icon }}</span>
-                <div class="record-info">
-                    <div class="record-details">
-                        <div class="category">{{ tx.category }}</div>
-                        <div class="note">{{ tx.note }}</div>
-                    </div>
-                    <div class="amount {% if tx.type == 'income' %}income{% else %}expense{% endif %}">
-                        {% if tx.type == 'expense' %}-{% endif %}₹{{ tx.amount }}
-                    </div>
+            {% for group in grouped_transactions %}
+                <div class="date-label-container">
+                    <div class="date-label">{{ group.grouper|date:"d, M" }}</div>
+                    <hr class="date-underline">
                 </div>
-            </div>
+                {% for tx in group.list %}
+                    <div class="record-item"
+                        data-id="{{ tx.id }}"
+                        data-type="{{ tx.type }}"
+                        data-category="{{ tx.category }}"
+                        data-note="{{ tx.note }}"
+                        data-amount="{{ tx.amount }}"
+                        data-date="{{ tx.date|date:'Y-m-d' }}">
+                        
+                        <span class="record-icon">{{ tx.category.icon }}</span>
+                        <div class="record-info">
+                            <div class="record-details">
+                                <div class="category">{{ tx.category }}</div>
+                                <div class="note">{{ tx.note }}</div>
+                            </div>
+                            <div class="amount {% if tx.type == 'income' %}income{% else %}expense{% endif %}">
+                                {% if tx.type == 'expense' %}-{% endif %}₹{{ tx.amount }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
             {% endfor %}
         </div>
 
