@@ -10,7 +10,7 @@ def home(request):
     income_categories = Category.objects.filter(type='income').order_by('name')
     expense_categories = Category.objects.filter(type='expense').order_by('name')
     
-    transactions = Transaction.objects.all().order_by('date')
+    transactions = Transaction.objects.all().order_by('-date')
     
     return render(
         request, 'tracker/home.html',
