@@ -180,18 +180,23 @@
         }
     });
 
+
+    const categories = {{ chart_labels|safe }};
+    const chartData = {{ chart_data|safe }};
+
     new Chart(document.getElementById('pieChart'), {
         type: 'pie',
         data: {
-            labels: ['Food', 'Rent', 'Travel', 'Others'],
+            labels: categories,
             datasets: [{
                 label: 'Expenses',
-                data: [2000, 8000, 1500, 1000],
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#888']
+                data: chartData,
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#888', '#44bd32', '#f368e0'] // Add more colors if needed
             }]
         }
     });
 
+    
     new Chart(document.getElementById('lineChart'), {
         type: 'line',
         data: {

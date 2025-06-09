@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Category, Transaction
+from django.db.models import Sum
 from datetime import date
 from decimal import Decimal
 import ast
@@ -12,13 +13,27 @@ def home(request):
     
     transactions = Transaction.objects.all().order_by('-date')
     
+    breakdown = (
+        Transaction.objects
+        .filter(type='expense')
+        .values('category__name')
+        .annotate(total=Sum('amount'))
+        .order_by('-total')
+    )
+    chart_labels = [item['category__name'] for item in breakdown]
+    chart_data = [float(item['total']) for item in breakdown]
+    
+    
+    
     return render(
         request, 'tracker/home.html',
         {
             'transactions': transactions, 
             'income_categories': income_categories,
             'expense_categories': expense_categories,
-            'today': date.today().isoformat()
+            'today': date.today().isoformat(),
+            'chart_labels': chart_labels,
+            'chart_data': chart_data
         }
     )
     
