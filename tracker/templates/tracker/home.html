@@ -179,6 +179,7 @@
             }
         }
     });
+
     new Chart(document.getElementById('pieChart'), {
         type: 'pie',
         data: {
@@ -207,6 +208,16 @@
     });
 
      // INCOME MODAL
+    function resetForm(formId) {
+        const form = document.getElementById(formId);
+        if (form) {
+            form.reset();  // clears most inputs
+            form.querySelector('input[name="tx_id"]').value = '';
+            form.querySelector('input[name="old_data"]').value = '';
+        }
+    }
+
+
     const incomeModal = document.getElementById("incomeModal");
     const openIncomeBtn = document.getElementById("openIncomeModalBtn");
     const closeIncomeBtn = document.getElementById("closeIncomeModal");
@@ -235,9 +246,11 @@
     window.onclick = function (event) {
         if (event.target === incomeModal) {
             incomeModal.style.display = "none";
+            resetForm('incomeForm');
         }
         if (event.target === expenseModal) {
             expenseModal.style.display = "none";
+            resetForm('expenseForm');
         }
     };
 
