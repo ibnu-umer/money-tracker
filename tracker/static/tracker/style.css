@@ -316,36 +316,46 @@ textarea {
     border-bottom: 1px solid #ccc;
 }
 
+.record-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    border-bottom: 1px solid #ddd;
+}
+
 .record-icon {
     font-size: 24px;
-    margin-right: 12px;
-    width: 30px;
-    text-align: center;
+    margin-right: 15px;
 }
 
 .record-info {
-    flex: 1;
-}
-
-.record-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex: 1;
+}
+
+.record-details {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
 }
 
 .category {
     font-weight: bold;
-    padding: 0.6rem;
 }
 
 .note {
     font-size: 0.9em;
     color: #666;
-    margin-top: 2px;
 }
 
 .amount {
     font-weight: bold;
+    font-size: 1em;
+    min-width: 80px;
+    text-align: right;
 }
 
 .amount.income {
@@ -355,6 +365,7 @@ textarea {
 .amount.expense {
     color: red;
 }
+
 
 /* Graph Section */
 .graph {

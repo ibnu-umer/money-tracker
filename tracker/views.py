@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Category, Transaction
 from datetime import date
 from decimal import Decimal
+import ast
 
 
 
@@ -46,6 +47,51 @@ def add_transaction(request):
         )
         
         return redirect("home")
+    
+    
+
+def edit_transaction(request):
+    if request.method == 'POST':
+        old_data = ast.literal_eval(request.POST.get('old_data'))
+        tx_id = request.POST.get('tx_id')
+        category_name = request.POST.get('category')
+        note = request.POST.get('note')
+        amount = request.POST.get('amount')
+        date = request.POST.get('date')
+        
+        transaction = get_object_or_404(Transaction, id=tx_id)
+        category = get_object_or_404(
+                Category,
+                name=old_data.get('category'),
+                type=old_data.get('type')
+        )
+        
+        
+        # Update category values if amount or category has any changes
+        if category_name != old_data.get('category'):
+            # Substract the amount from the old category total
+            category.total -= Decimal(old_data.get('amount'))
+            category.save()
+            
+            category = get_object_or_404(Category, name=category_name, type=transaction.type)
+            category.total += Decimal(amount)  
+            category.save()
+            
+        elif old_data.get('amount') != amount:
+            # No category change, amount changed
+            category.total -= Decimal(old_data.get('amount'))
+            category.total += Decimal(amount)
+            category.save()
+            
+       
+
+        transaction.category = category
+        transaction.note = note
+        transaction.amount = amount
+        transaction.date = date
+        transaction.save()
+        
+        return redirect('home')
 
 
 

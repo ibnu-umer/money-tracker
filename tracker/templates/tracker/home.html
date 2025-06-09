@@ -73,45 +73,53 @@
             <h2>Daily Transactions</h2>
 
             {% for tx in transactions %}
-            <div class="record-item">
+            <div class="record-item"
+                data-id="{{ tx.id }}"
+                data-type="{{ tx.type }}"
+                data-category="{{ tx.category }}"
+                data-note="{{ tx.note }}"
+                data-amount="{{ tx.amount }}"
+                data-date="{{ tx.date|date:'Y-m-d' }}">
+
                 <span class="record-icon">{{ tx.category.icon }}</span>
                 <div class="record-info">
-                    <div class="record-top">
+                    <div class="record-details">
                         <div class="category">{{ tx.category }}</div>
-                        <div class="amount {% if tx.type == 'income' %}income{% else %}expense{% endif %}">
-                            {% if tx.type == 'expense' %}-{% endif %}₹{{ tx.amount }}
-                        </div>
+                        <div class="note">{{ tx.note }}</div>
                     </div>
-                    <div class="note">{{ tx.note }}</div>
+                    <div class="amount {% if tx.type == 'income' %}income{% else %}expense{% endif %}">
+                        {% if tx.type == 'expense' %}-{% endif %}₹{{ tx.amount }}
+                    </div>
                 </div>
             </div>
             {% endfor %}
         </div>
 
-            <div class="graph">
-                <h2>Statistics</h2>
-                <div class="chart-layout">
-                    <!-- Wide container for both bar and line charts -->
-                    <div class="chart-item wide">
-                        <h3>Monthly Summary</h3>
-                        <canvas id="barChart"></canvas>
-                        <h3 style="margin-top: 1rem;">Income vs Expense Trend</h3>
-                        <canvas id="trendLineChart"></canvas>
-                    </div>
 
-                    <!-- Expense Breakdown -->
-                    <div class="chart-item small">
-                        <h3>Expense Breakdown</h3>
-                        <canvas id="pieChart"></canvas>
-                    </div>
+        <div class="graph">
+            <h2>Statistics</h2>
+            <div class="chart-layout">
+                <!-- Wide container for both bar and line charts -->
+                <div class="chart-item wide">
+                    <h3>Monthly Summary</h3>
+                    <canvas id="barChart"></canvas>
+                    <h3 style="margin-top: 1rem;">Income vs Expense Trend</h3>
+                    <canvas id="trendLineChart"></canvas>
+                </div>
 
-                    <!-- Cumulative Balance -->
-                    <div class="chart-item small">
-                        <h3>Cumulative Balance</h3>
-                        <canvas id="lineChart"></canvas>
-                    </div>
+                <!-- Expense Breakdown -->
+                <div class="chart-item small">
+                    <h3>Expense Breakdown</h3>
+                    <canvas id="pieChart"></canvas>
+                </div>
+
+                <!-- Cumulative Balance -->
+                <div class="chart-item small">
+                    <h3>Cumulative Balance</h3>
+                    <canvas id="lineChart"></canvas>
                 </div>
             </div>
+        </div>
 
     </div>
 
@@ -231,6 +239,59 @@
         flatpickr("#dateInput", {
         dateFormat: "Y-m-d"
         });
+    });
+
+
+    document.querySelectorAll('.record-item').forEach(item => {
+        item.addEventListener('dblclick', function () {
+            const txType = this.getAttribute('data-type');
+
+            if (txType === 'income') {
+                incomeModal.style.display = "block";
+            } else if (txType === 'expense') {
+                expenseModal.style.display = "block";
+            }
+            
+            const tx_id = this.getAttribute('data-id');
+            const tx_type = this.getAttribute('data-type')
+            const category = this.getAttribute('data-category');
+            const note = this.getAttribute('data-note');
+            const amount = this.getAttribute('data-amount');
+            const date = this.getAttribute('data-date');
+
+            const formPrefix = txType === 'income' ? 'income' : 'expense';
+            const form = document.querySelector(`#${formPrefix}Form`);
+
+            // ✅ Set values 
+            const idInput = form.querySelector(`input[name="tx_id"]`);
+            const typeInput = form.querySelector(`input[name="tx_type"]`)
+            const categorySelect = form.querySelector(`select[name="category"]`);
+            const noteInput = form.querySelector(`textarea[name="note"]`);
+            const amountInput = form.querySelector(`input[name="amount"]`);
+            const dateInput = form.querySelector(`input[name="date"]`);
+
+            if (idInput) idInput.value = tx_id;
+            if (typeInput) typeInput.value = tx_type;
+            if (categorySelect) categorySelect.value = category;
+            if (noteInput) noteInput.value = note;
+            if (amountInput) amountInput.value = amount;
+            if (dateInput && date) {
+                dateInput.value = date; 
+            }
+
+            form.action = '/edit-transaction/';
+
+            const oldData = {
+                type: tx_type,
+                amount: amount,
+                note: note,
+                category: category,
+                date: date
+            };
+
+            form.querySelector('input[name="old_data"]').value = JSON.stringify(oldData);
+        });
+        
     });
     
     </script>
