@@ -5,7 +5,6 @@ from django.db.models.functions import TruncMonth
 from django.db.models import Sum
 from django.utils.timezone import now
 import datetime
-from decimal import Decimal
 import ast
 
 
@@ -21,8 +20,8 @@ def home(request):
     
     #! Data for Category table
     table_data = {
-        'income': {category: 0.0 for category in income_categories},
-        'expense': {category: 0.0 for category in expense_categories}
+        'income': {category: float(0) for category in income_categories},
+        'expense': {category: float(0) for category in expense_categories}
     }
 
     for tx in transactions:
@@ -106,18 +105,15 @@ def home(request):
 
 def add_transaction(request):
     if request.method == 'POST':
-        date = request.POST.get("date")
-        category = request.POST.get("category")
-        amount = request.POST.get("amount")
-        note = request.POST.get("note")
-        tx_type = request.POST.get("tx_type")
+        date = request.POST.get('date')
+        category = request.POST.get('category')
+        amount = request.POST.get('amount')
+        note = request.POST.get('note')
+        tx_type = request.POST.get('tx_type')
         
-        # Add to Category DB
-        cat = Category.objects.get(name=category, type=tx_type)
-        cat.total += Decimal(amount)
-        cat.save()
-        
+    
         # Add to transactions DB
+        cat = Category.objects.get(name=category, type=tx_type)
         Transaction.objects.create(
             date=date, 
             category=cat,
@@ -126,7 +122,7 @@ def add_transaction(request):
             note=note,
         )
         
-        return redirect("home")
+        return redirect('home')
     
     
 
@@ -140,32 +136,13 @@ def edit_transaction(request):
         date = request.POST.get('date')
         
         transaction = get_object_or_404(Transaction, id=tx_id)
-        category = get_object_or_404(
+        category_obj = get_object_or_404(
                 Category,
-                name=old_data.get('category'),
+                name=category_name,
                 type=old_data.get('type')
         )
         
-        
-        # Update category values if amount or category has any changes
-        if category_name != old_data.get('category'):
-            # Substract the amount from the old category total
-            category.total -= Decimal(old_data.get('amount'))
-            category.save()
-            
-            category = get_object_or_404(Category, name=category_name, type=transaction.type)
-            category.total += Decimal(amount)  
-            category.save()
-            
-        elif old_data.get('amount') != amount:
-            # No category change, amount changed
-            category.total -= Decimal(old_data.get('amount'))
-            category.total += Decimal(amount)
-            category.save()
-            
-       
-
-        transaction.category = category
+        transaction.category = category_obj
         transaction.note = note
         transaction.amount = amount
         transaction.date = date
