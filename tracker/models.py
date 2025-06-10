@@ -11,12 +11,10 @@ class Category(models.Model):
 
     name = models.CharField(max_length=100)
     type = models.CharField(max_length=10, choices=CATEGORY_TYPES)
-    icon = models.CharField(max_length=10, blank=False, help_text="Emoji or short icon")
+    icon = models.CharField(max_length=10, blank=False, help_text='Emoji or short icon')
 
     def __str__(self):
-        return f"{self.name}"
-
-
+        return f'{self.name}'
 
 
 class Transaction(models.Model):
