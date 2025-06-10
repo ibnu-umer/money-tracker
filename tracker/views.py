@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Category, Transaction
+from dateutil.relativedelta import relativedelta
+from django.db.models.functions import TruncMonth
 from django.db.models import Sum
-from datetime import date
+from django.utils.timezone import now
+import datetime
 from decimal import Decimal
 import ast
 
@@ -11,17 +14,62 @@ def home(request):
     income_categories = Category.objects.filter(type='income').order_by('name')
     expense_categories = Category.objects.filter(type='expense').order_by('name')
     
-    transactions = Transaction.objects.all().order_by('-date')
+    # Retrieve transaction data for the current month
+    current_month_start = now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+    transactions = Transaction.objects.filter(date__gte=current_month_start).order_by('-date')
     
+    #! Pie Chart Data
+    # Expense data for pie chart
     breakdown = (
-        Transaction.objects
+        transactions
         .filter(type='expense')
         .values('category__name')
         .annotate(total=Sum('amount'))
         .order_by('-total')
     )
-    chart_labels = [item['category__name'] for item in breakdown]
-    chart_data = [float(item['total']) for item in breakdown]
+
+    pie_chart_lables = [item['category__name'] for item in breakdown]
+    pie_chart_data = [float(item['total']) for item in breakdown]
+    
+    
+    #! Bar Chart Data
+    # Get Incomes and Expeneses for the past 3 and currnet month
+    start_month = current_month_start - relativedelta(months=3)
+    monthly_expenses = (
+        Transaction.objects.filter(
+            type='expense',
+            date__gte=start_month,
+            date__lte=datetime.date.today()
+        )
+        .annotate(month=TruncMonth('date'))
+        .values('month')
+        .annotate(total=Sum('amount'))
+        .order_by('month')
+    )
+    
+    monthly_incomes = (
+        Transaction.objects.filter(
+            type='income',
+            date__gte=start_month,
+            date__lte=datetime.date.today()
+        )
+        .annotate(month=TruncMonth('date'))
+        .values('month')
+        .annotate(total=Sum('amount'))
+        .order_by('month')
+    )
+    
+    expense_dict = {e['month'].strftime('%b'): e['total'] for e in monthly_expenses}
+    income_dict = {i['month'].strftime('%b'): i['total'] for i in monthly_incomes}
+    bar_chart_labels = [  # Get last 4 month names
+        (datetime.datetime.today() - relativedelta(months=i)).strftime('%b')
+        for i in range(3, -1, -1)
+    ]
+    
+    bar_chart_data = [ # Get last 4 months data, if not exists, create with 0
+        [float(income_dict.get(month, 0)), float(expense_dict.get(month, 0))]
+        for month in bar_chart_labels
+    ]
     
     
     
@@ -31,9 +79,11 @@ def home(request):
             'transactions': transactions, 
             'income_categories': income_categories,
             'expense_categories': expense_categories,
-            'today': date.today().isoformat(),
-            'chart_labels': chart_labels,
-            'chart_data': chart_data
+            'today': datetime.date.today().isoformat(),
+            'pie_chart_labels': pie_chart_lables,
+            'pie_chart_data': pie_chart_data,
+            'bar_chart_labels': bar_chart_labels,
+            'bar_chart_data': bar_chart_data
         }
     )
     

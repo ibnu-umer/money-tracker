@@ -134,17 +134,23 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
     const barCtx = document.getElementById('barChart').getContext('2d');
+
+    const bar_chartLabels = {{ bar_chart_labels|safe }};
+    const bar_chartData = {{ bar_chart_data|safe }};
+
+    const incomeData = bar_chartData.map(row => row[0]);
+    const expenseData = bar_chartData.map(row => row[1]);
     new Chart(barCtx, {
         type: 'bar',
         data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr'],
+            labels: bar_chartLabels,
             datasets: [{
                 label: 'Income',
-                data: [30000, 28000, 32000, 35000],
+                data: incomeData,
                 backgroundColor: 'green'
             }, {
                 label: 'Expense',
-                data: [15000, 16000, 14000, 17000],
+                data: expenseData,
                 backgroundColor: 'red'
             }]
         }
@@ -181,16 +187,16 @@
     });
 
 
-    const categories = {{ chart_labels|safe }};
-    const chartData = {{ chart_data|safe }};
+    const pie_categories = {{ pie_chart_labels|safe }};
+    const pie_chartData = {{ pie_chart_data|safe }};
 
     new Chart(document.getElementById('pieChart'), {
         type: 'pie',
         data: {
-            labels: categories,
+            labels: pie_categories,
             datasets: [{
                 label: 'Expenses',
-                data: chartData,
+                data: pie_chartData,
                 backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#888', '#44bd32', '#f368e0'] // Add more colors if needed
             }]
         }
