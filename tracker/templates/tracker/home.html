@@ -160,18 +160,18 @@
     new Chart(trendCtx, {
         type: 'line',
         data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr'],
+            labels: bar_chartLabels,
             datasets: [
                 {
                     label: 'Income',
-                    data: [30000, 28000, 32000, 35000],
+                    data: incomeData,
                     borderColor: 'green',
                     fill: false,
                     tension: 0.3
                 },
                 {
                     label: 'Expense',
-                    data: [15000, 16000, 14000, 17000],
+                    data: expenseData,
                     borderColor: 'red',
                     fill: false,
                     tension: 0.3
