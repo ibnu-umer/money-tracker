@@ -135,7 +135,7 @@
     <script>
     const barCtx = document.getElementById('barChart').getContext('2d');
 
-    const bar_chartLabels = {{ bar_chart_labels|safe }};
+    const chartLabels = {{ chart_labels|safe }};
     const bar_chartData = {{ bar_chart_data|safe }};
 
     const incomeData = bar_chartData.map(row => row[0]);
@@ -143,7 +143,7 @@
     new Chart(barCtx, {
         type: 'bar',
         data: {
-            labels: bar_chartLabels,
+            labels: chartLabels,
             datasets: [{
                 label: 'Income',
                 data: incomeData,
@@ -166,7 +166,7 @@
     new Chart(trendCtx, {
         type: 'line',
         data: {
-            labels: bar_chartLabels,
+            labels: chartLabels,
             datasets: [
                 {
                     label: 'Income',
@@ -208,19 +208,26 @@
         }
     });
 
-    
+
+    const balanceData = {{ balance_data|safe }};
     new Chart(document.getElementById('lineChart'), {
         type: 'line',
         data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr'],
+            labels: chartLabels,
             datasets: [{
                 label: 'Cumulative Balance',
-                data: [15000, 27000, 45000, 63000],
+                data: balanceData,
                 borderColor: '#4B0082',
                 fill: true,
                 backgroundColor: 'rgba(75, 0, 130, 0.1)',
                 tension: 0.3
             }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            }
         }
     });
 

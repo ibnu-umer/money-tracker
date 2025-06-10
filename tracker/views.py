@@ -61,17 +61,20 @@ def home(request):
     
     expense_dict = {e['month'].strftime('%b'): e['total'] for e in monthly_expenses}
     income_dict = {i['month'].strftime('%b'): i['total'] for i in monthly_incomes}
-    bar_chart_labels = [  # Get last 4 month names
+    chart_labels = [  # Get last 4 month names
         (datetime.datetime.today() - relativedelta(months=i)).strftime('%b')
         for i in range(3, -1, -1)
     ]
     
     bar_chart_data = [ # Get last 4 months data, if not exists, create with 0
         [float(income_dict.get(month, 0)), float(expense_dict.get(month, 0))]
-        for month in bar_chart_labels
+        for month in chart_labels
     ]
     
     
+    #! Balance chart
+    balance_data = [data[0] - data[1] for data in bar_chart_data]
+
     
     return render(
         request, 'tracker/home.html',
@@ -82,8 +85,9 @@ def home(request):
             'today': datetime.date.today().isoformat(),
             'pie_chart_labels': pie_chart_lables,
             'pie_chart_data': pie_chart_data,
-            'bar_chart_labels': bar_chart_labels,
-            'bar_chart_data': bar_chart_data
+            'chart_labels': chart_labels,
+            'bar_chart_data': bar_chart_data,
+            'balance_data': balance_data
         }
     )
     
