@@ -18,8 +18,18 @@ def home(request):
     current_month_start = now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
     transactions = Transaction.objects.filter(date__gte=current_month_start).order_by('-date')
     
+    
+    #! Data for Category table
+    table_data = {
+        'income': {category: 0.0 for category in income_categories},
+        'expense': {category: 0.0 for category in expense_categories}
+    }
+
+    for tx in transactions:
+        table_data[tx.type][tx.category] += float(tx.amount)
+        
+    
     #! Pie Chart Data
-    # Expense data for pie chart
     breakdown = (
         transactions
         .filter(type='expense')
@@ -80,8 +90,9 @@ def home(request):
         request, 'tracker/home.html',
         {
             'transactions': transactions, 
-            'income_categories': income_categories,
-            'expense_categories': expense_categories,
+            'income_categories': table_data['income'],
+            'expense_categories': table_data['expense'],
+            'table_data': table_data,
             'today': datetime.date.today().isoformat(),
             'pie_chart_labels': pie_chart_lables,
             'pie_chart_data': pie_chart_data,

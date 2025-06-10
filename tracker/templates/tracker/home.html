@@ -34,8 +34,8 @@
 
             <table class="income-table">
                 <tr><th>Category</th><th>Amount</th></tr>
-                {% for category in income_categories %}
-                    <tr><td>{{ category.icon }} {{ category }}</td><td>₹{{ category.total }}</td></tr>
+                {% for category, total in income_categories.items %}
+                    <tr><td>{{ category.icon }} {{ category }}</td><td>₹{{ total }}</td></tr>
                 {% endfor %}
             </table>
         </div>
@@ -58,8 +58,8 @@
 
             <table class="expense-table">
                 <tr><th>Category</th><th>Amount</th></tr> 
-                {% for category in expense_categories %}
-                    <tr><td>{{ category.icon }} {{ category }}</td><td>₹{{ category.total }}</td></tr>
+                {% for category, total in expense_categories.items %}
+                    <tr><td>{{ category.icon }} {{ category }}</td><td>₹{{ total }}</td></tr>
                 {% endfor %}
             </table>
         </div>
