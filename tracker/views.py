@@ -152,4 +152,18 @@ def edit_transaction(request):
 
 
 
+def manage_categories(request):
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        icon = request.POST.get('icon')
+        name = request.POST.get('name')
+        category_id = request.POST.get('category_id')
 
+        if action == 'add':
+            Category.objects.create(name=name, icon=icon, type='expense')  # or 'income'
+        elif action == 'edit' and category_id:
+            Category.objects.filter(id=category_id).update(name=name, icon=icon)
+        elif action == 'delete' and category_id:
+            Category.objects.filter(id=category_id).delete()
+
+        return redirect('home')  

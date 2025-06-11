@@ -130,8 +130,26 @@
 
     </div>
 
+
+    
+    <button type="button" class="add-btn-expandable" id="openCategoryModalBtn">
+        <img src="{% static 'tracker/icons/add-icon.svg' %}" class="icon-svg">Add Income
+    </button>
+
+    <div id="categoryModal" class="cat-modal">
+        <div class="cat-modal-content">
+            <span class="close" id="closeCategoryModalBtn">&times;</span>
+            {% include 'tracker/includes/modify_category_form.html' with form_id="categoryForm" %}
+        </div>
+    </div>
+
+
+
+
+
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
     <script>
     const barCtx = document.getElementById('barChart').getContext('2d');
 
@@ -267,16 +285,16 @@
         expenseModal.style.display = "none";
     };
 
-    window.onclick = function (event) {
-        if (event.target === incomeModal) {
-            incomeModal.style.display = "none";
-            resetForm('incomeForm');
-        }
-        if (event.target === expenseModal) {
-            expenseModal.style.display = "none";
-            resetForm('expenseForm');
-        }
-    };
+    // window.onclick = function (event) {
+    //     if (event.target === incomeModal) {
+    //         incomeModal.style.display = "none";
+    //         resetForm('incomeForm');
+    //     }
+    //     if (event.target === expenseModal) {
+    //         expenseModal.style.display = "none";
+    //         resetForm('expenseForm');
+    //     }
+    // };
 
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -337,10 +355,73 @@
         });
         
     });
+
+
+    const categoryModal = document.getElementById("categoryModal");
+    const openBtn = document.getElementById("openCategoryModalBtn");
+    const closeBtn = document.getElementById("closeCategoryModalBtn");
+
+    openBtn.onclick = () => {
+        categoryModal.style.display = "block";
+    };
+    closeBtn.onclick = () => {
+        categoryModal.style.display = "none";
+    };
+
+
+    const emojiBtn = document.getElementById('emojiBtn');
+    const emojiPicker = document.getElementById('emojiPicker');
+
+    emojiBtn.onclick = () => {
+        emojiPicker.style.display = "none";
+    };
+
+
+
+
+    window.onclick = function (event) {
+        if (event.target === incomeModal) {
+            incomeModal.style.display = "none";
+            resetForm('incomeForm');
+        }
+        if (event.target === expenseModal) {
+            expenseModal.style.display = "none";
+            resetForm('expenseForm');
+        }
+        if (event.target === categoryModal) {
+            categoryModal.style.display = "none";
+            document.getElementById("categoryForm").reset();
+        }
+    };
+
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const emojiInput = document.getElementById('emojiInput');
+        const emojiPicker = document.getElementById('emojiPicker');
+
+        if (!emojiInput || !emojiPicker) return;
+
+        emojiInput.addEventListener('click', () => {
+        emojiPicker.style.display = 'block';
+        const rect = emojiInput.getBoundingClientRect();
+        emojiPicker.style.top = `${rect.bottom + window.scrollY}px`;
+        emojiPicker.style.left = `${rect.left + window.scrollX}px`;
+        });
+
+        document.addEventListener('click', (e) => {
+        if (!emojiPicker.contains(e.target) && e.target !== emojiInput) {
+            emojiPicker.style.display = 'none';
+        }
+        });
+
+        emojiPicker.addEventListener('emoji-click', event => {
+        emojiInput.value = event.detail.unicode;
+        emojiPicker.style.display = 'none';
+        });
+    });
     
-    </script>
-
-
+</script>
 
 </body>
 </html>

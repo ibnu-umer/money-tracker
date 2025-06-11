@@ -1,0 +1,35 @@
+<form id="categoryForm" method="POST" action="{% url 'manage_categories' %}">
+  {% csrf_token %}
+  <div class="category-form">
+    
+    <!-- Sidebar -->
+    <div class="category-sidebar">
+      <div class="category-list" id="categoryList">
+        {% for category in categories %}
+        <div class="category-item" data-id="{{ category.id }}">
+          {{ category.icon }} {{ category.name }}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Right-side form -->
+    <div class="form-content">
+      <!-- Only one emoji picker -->
+      <emoji-picker id="emojiPicker" style="position: absolute; display: none;"></emoji-picker>
+      
+
+      <div class="form-fields">
+        <!-- <input type="text" id="emojiInput" name="icon" placeholder="😀" maxlength="1" style="width: 50px; height: 50px;" required> -->
+        <button type="button" id="emojiInput" class="emoji-button">😄</button>
+        <input type="text" name="name" placeholder="Category Name" required style="flex: 1;">
+      </div>
+
+      <div class="form-buttons">
+        <button type="submit" name="action" value="add">Add</button>
+        <button type="submit" name="action" value="edit">Edit</button>
+        <button type="submit" name="action" value="delete">Delete</button>
+      </div>
+    </div>
+  </div>
+</form>
