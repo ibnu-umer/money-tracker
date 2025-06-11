@@ -1,4 +1,3 @@
-
 <form id="categoryForm" method="POST" action="{% url 'manage_categories' %}">
   {% csrf_token %}
   <div class="category-form">
@@ -6,11 +5,19 @@
     <!-- Sidebar -->
     <div class="category-sidebar">
       <div class="category-list" id="categoryList">
-        {% for category in categories %}
+
+        {% for category in income_categories %}
         <div class="category-item" data-id="{{ category.id }}">
           {{ category.icon }} {{ category.name }}
         </div>
         {% endfor %}
+
+        {% for category in expense_categories %}
+        <div class="category-item" data-id="{{ category.id }}">
+          {{ category.icon }} {{ category.name }}
+        </div>
+        {% endfor %}
+
       </div>
     </div>
 
