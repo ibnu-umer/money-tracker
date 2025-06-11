@@ -359,6 +359,40 @@
 
 
 
+
+
+
+    const emojiBtn = document.getElementById('emojiInput');
+    const emojiPicker = document.getElementById('emojiPicker');
+    const iconInput = document.getElementById('iconInput');
+
+    // Show emoji picker near the button
+    emojiBtn.addEventListener('click', (e) => {
+        const rect = emojiBtn.getBoundingClientRect();
+        // emojiPicker.style.top = `${rect.bottom + window.scrollY}px`;
+        // emojiPicker.style.left = `${rect.left + window.scrollX}px`;
+        emojiPicker.style.display = 'block';
+    });
+
+    // Hide when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!emojiPicker.contains(e.target) && e.target !== emojiBtn) {
+        emojiPicker.style.display = 'none';
+        }
+    });
+
+    // Update emoji on click
+    emojiPicker.addEventListener('emoji-click', (event) => {
+        const emoji = event.detail.unicode;
+        emojiBtn.textContent = emoji;
+        iconInput.value = emoji;
+        emojiPicker.style.display = 'none';
+    });
+
+
+
+
+
     window.onclick = function (event) {
         if (event.target === incomeModal) {
             incomeModal.style.display = "none";

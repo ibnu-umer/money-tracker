@@ -1,3 +1,17 @@
+<!-- In your template file -->
+
+<!-- HEAD SECTION: Add this in your HTML <head> -->
+<script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
+<style>
+  #emojiPicker {
+    position: absolute;
+    display: none;
+    z-index: 1000;
+  }
+</style>
+
+<!-- BODY SECTION: Inside your form -->
+
 <form id="categoryForm" method="POST" action="{% url 'manage_categories' %}">
   {% csrf_token %}
   <div class="category-form">
@@ -15,13 +29,13 @@
 
     <!-- Right-side form -->
     <div class="form-content">
-      <!-- Only one emoji picker -->
-      <emoji-picker id="emojiPicker" style="position: absolute; display: none;"></emoji-picker>
-      
+      <!-- Hidden Emoji Picker -->
+      <emoji-picker id="emojiPicker"></emoji-picker>
 
       <div class="form-fields">
-        <!-- <input type="text" id="emojiInput" name="icon" placeholder="😀" maxlength="1" style="width: 50px; height: 50px;" required> -->
+        <!-- Emoji Picker Button + Hidden Input -->
         <button type="button" id="emojiInput" class="emoji-button">😄</button>
+        <input type="hidden" name="icon" id="iconInput" value="😄" />
         <input type="text" name="name" placeholder="Category Name" required style="flex: 1;">
       </div>
 
@@ -33,3 +47,4 @@
     </div>
   </div>
 </form>
+
