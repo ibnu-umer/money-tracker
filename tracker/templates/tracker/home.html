@@ -285,17 +285,6 @@
         expenseModal.style.display = "none";
     };
 
-    // window.onclick = function (event) {
-    //     if (event.target === incomeModal) {
-    //         incomeModal.style.display = "none";
-    //         resetForm('incomeForm');
-    //     }
-    //     if (event.target === expenseModal) {
-    //         expenseModal.style.display = "none";
-    //         resetForm('expenseForm');
-    //     }
-    // };
-
 
     document.addEventListener('DOMContentLoaded', function () {
         flatpickr("#date_input", {
@@ -369,15 +358,6 @@
     };
 
 
-    const emojiBtn = document.getElementById('emojiBtn');
-    const emojiPicker = document.getElementById('emojiPicker');
-
-    emojiBtn.onclick = () => {
-        emojiPicker.style.display = "none";
-    };
-
-
-
 
     window.onclick = function (event) {
         if (event.target === incomeModal) {
@@ -394,32 +374,6 @@
         }
     };
 
-
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const emojiInput = document.getElementById('emojiInput');
-        const emojiPicker = document.getElementById('emojiPicker');
-
-        if (!emojiInput || !emojiPicker) return;
-
-        emojiInput.addEventListener('click', () => {
-        emojiPicker.style.display = 'block';
-        const rect = emojiInput.getBoundingClientRect();
-        emojiPicker.style.top = `${rect.bottom + window.scrollY}px`;
-        emojiPicker.style.left = `${rect.left + window.scrollX}px`;
-        });
-
-        document.addEventListener('click', (e) => {
-        if (!emojiPicker.contains(e.target) && e.target !== emojiInput) {
-            emojiPicker.style.display = 'none';
-        }
-        });
-
-        emojiPicker.addEventListener('emoji-click', event => {
-        emojiInput.value = event.detail.unicode;
-        emojiPicker.style.display = 'none';
-        });
-    });
     
 </script>
 
