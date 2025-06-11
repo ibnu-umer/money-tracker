@@ -367,6 +367,12 @@ textarea {
     cursor: pointer;
 }
 
+.emojiPicker {
+    position: absolute;
+    display: none;
+    z-index: 1000;
+}
+
 
 /* Records Widget */
 .records {
