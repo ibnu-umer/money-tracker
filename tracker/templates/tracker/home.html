@@ -393,6 +393,11 @@
 
     const categoryItems = document.querySelectorAll('.category-item');
     const categoryNameInput = document.getElementById('categoryNameInput');
+    const editBtn = document.getElementById('editBtn')
+    const formWarns = document.getElementById('formWarns')
+    const warningLabel = document.getElementById('warningLabel')
+    const clearBtn = document.getElementById('clearBtn')
+    editBtn.disabled = true;
 
     categoryItems.forEach(item => {
         item.addEventListener('click', (e) => {
@@ -400,6 +405,9 @@
             const categoryName = nameParts.join(' ');
             categoryNameInput.value = categoryName;
             emojiBtn.textContent = emoji;
+            editBtn.disabled = false;
+            warningLabel.textContent = emoji + ' ' + categoryName
+            formWarns.style.display = 'flex';
         });
     });
 

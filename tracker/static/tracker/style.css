@@ -344,6 +344,40 @@ textarea {
     margin-bottom: 20px;
 }
 
+
+.form-warns {
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-self: flex-start; 
+    gap: 3px;
+}
+
+
+#warningLabel {
+    font-size: 14px;
+    color: rgb(0, 0, 0);
+}
+
+.form-warns label:not(#warningLabel) {
+    font-size: 10px;
+    color: red;
+}
+
+
+.form-clear-btn {
+    border: none;
+    background: none;
+    width: 30px;
+    padding: 0px;
+}
+
+.form-clear-btn:hover {
+    color: blue;
+    cursor: pointer;
+}
+
+
 .form-fields input[type="text"] {
     padding: 12px;
     font-size: 18px;
@@ -368,13 +402,18 @@ textarea {
 
 
 .form-buttons button:disabled {
-    background-color: #969696;
-    border-color: #c9e2ff;
+    background-color: #c4c4c4;
+    border-color: #a2a2a2;
+}
+
+.form-buttons button:disabled:hover {
+    background-color: #c4c4c4;
+    border-color: #a2a2a2;
 }
 
 
 .form-buttons button:hover {
-    border-color: #0056b3;
+    border-color: #a49eff;
 }
 
 
