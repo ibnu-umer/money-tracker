@@ -416,17 +416,21 @@
     const formWarns = document.getElementById('formWarns')
     const warningLabel = document.getElementById('warningLabel')
     const clearBtn = document.getElementById('clearBtn')
+    const typeSelector = document.getElementById('typeSelector')
     editBtn.disabled = true;
 
     categoryItems.forEach(item => {
         item.addEventListener('click', (e) => {
             const [emoji, ...nameParts] = item.textContent.trim().split(' ');
             const categoryName = nameParts.join(' ');
+            const type_sel = item.dataset.type
+            const id = item.dataset.id
             categoryNameInput.value = categoryName;
             emojiBtn.textContent = emoji;
             editBtn.disabled = false;
-            warningLabel.textContent = emoji + ' ' + categoryName
-            formWarns.style.display = 'flex';
+            warningLabel.textContent = emoji + ' ' + categoryName 
+            formWarns.style.display = 'flex';  // show the warning label with clear button
+            typeSelector.value = type_sel
         });
     });
 

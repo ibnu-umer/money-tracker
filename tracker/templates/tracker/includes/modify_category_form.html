@@ -7,13 +7,13 @@
       <div class="category-list" id="categoryList">
 
         {% for category in income_categories %}
-        <div id="categoryItem" class="category-item" data-id="{{ category.id }}">
+        <div id="categoryItem" class="category-item" data-id="{{ category.id }}" data-type="income">
           {{ category.icon }} {{ category.name }}
         </div>
         {% endfor %}
 
         {% for category in expense_categories %}
-        <div id="categoryItem" class="category-item" data-id="{{ category.id }}">
+        <div id="categoryItem" class="category-item" data-id="{{ category.id }}" data-type="expense">
           {{ category.icon }} {{ category.name }}
         </div>
         {% endfor %}
