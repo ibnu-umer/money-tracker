@@ -11,6 +11,16 @@
 </head>
 <body>
 
+
+    {% if messages %}
+    <div id="messagePopupContainer">
+        {% for message in messages %}
+        <div class="popup-message {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+
     <div class="header">
         <h1 class="app-title">Money Tracker</h1>
         <div class="menu-buttons">
@@ -452,6 +462,11 @@
             resetCatForm()
         }
     };
+
+    setTimeout(() => {
+        const popup = document.getElementById('messagePopupContainer');
+        if (popup) popup.remove();
+    }, 3000);
 
     
 </script>

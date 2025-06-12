@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 from .models import Category, Transaction
 from dateutil.relativedelta import relativedelta
 from django.db.models.functions import TruncMonth
@@ -169,7 +170,11 @@ def manage_categories(request):
         elif action == 'delete' and category_id:
             Transaction.objects.filter(category_id=category_id)
             has_data = Transaction.objects.filter(category_id=category_id).exists()
-            if not has_data: # if the category has no data exist
+           
+            if has_data: # if the category has no data exist
+                messages.error(request, "This category cannot be deleted as it has associated transactions.")
+            else:
+                messages.success(request, "Category deleted successfull.")
                 Category.objects.filter(id=category_id).delete()
 
         return redirect('home')  
