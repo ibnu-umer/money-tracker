@@ -349,10 +349,6 @@ textarea {
     font-size: 18px;
 }
 
-.emoji-button {
-    border: #333;
-    cursor: pointer;
-}
 
 .form-buttons {
     display: flex;
@@ -371,6 +367,19 @@ textarea {
     position: absolute;
     display: none;
     z-index: 1000;
+}
+
+.emoji-button {
+    border: none;
+    cursor: pointer;
+    width: 50px;
+    font-size: 28px;
+    background: transparent;
+    align-content: center;
+}
+
+.emoji-button:hover {
+    font-size: 30px;
 }
 
 
