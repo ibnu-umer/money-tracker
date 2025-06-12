@@ -293,6 +293,10 @@
     const expenseModal = document.getElementById("expenseModal");
     const openExpenseBtn = document.getElementById("openExpenseModalBtn");
     const closeExpenseBtn = document.getElementById("closeExpenseModal");
+    
+    const expDeleteBtn = document.getElementById(`expenseFormDeleteBtn`);
+    const incDeleteBtn = document.getElementById(`incomeFormDeleteBtn`);
+
 
     openExpenseBtn.onclick = () => {
         expenseModal.style.display = "block";
@@ -316,9 +320,12 @@
 
             if (txType === 'income') {
                 incomeModal.style.display = "block";
+                if (incDeleteBtn) incDeleteBtn.disabled = false;
             } else if (txType === 'expense') {
                 expenseModal.style.display = "block";
+                if (expDeleteBtn) expDeleteBtn.disabled = false;
             }
+
             
             const tx_id = this.getAttribute('data-id');
             const tx_type = this.getAttribute('data-type')
@@ -329,6 +336,7 @@
 
             const formPrefix = txType === 'income' ? 'income' : 'expense';
             const form = document.querySelector(`#${formPrefix}Form`);
+            
 
             // ✅ Set values 
             const idInput = form.querySelector(`input[name="tx_id"]`);
@@ -358,8 +366,7 @@
             };
 
             form.querySelector('input[name="old_data"]').value = JSON.stringify(oldData);
-        });
-        
+        });        
     });
 
 
@@ -460,10 +467,12 @@
         if (event.target === incomeModal) {
             incomeModal.style.display = "none";
             resetForm('incomeForm');
+            document.getElementById(`incomeFormDeleteBtn`).disabled = true;
         }
         if (event.target === expenseModal) {
             expenseModal.style.display = "none";
             resetForm('expenseForm');
+            document.getElementById(`expenseFormDeleteBtn`).disabled = true;
         }
         if (event.target === categoryModal) {
             categoryModal.style.display = "none";

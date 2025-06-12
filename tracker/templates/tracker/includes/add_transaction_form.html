@@ -30,5 +30,8 @@
         <textarea name="note" id="note_textarea" rows="2" placeholder="Optional notes..."></textarea>
     </div>
 
-    <button type="submit" class="submit-btn">Save</button>
+    <div class="form-buttons">
+        <button type="submit" class="submit-btn">Save</button>
+        <button type="submit" id="{{ form_id }}DeleteBtn" name="action" value="delete" class="delete-btn" disabled>Delete</button>
+    </div>
 </form>
