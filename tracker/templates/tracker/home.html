@@ -11,138 +11,145 @@
 </head>
 <body>
 
-    <h1>Money Tracker</h1>
-
-    <!-- Income and Expense Tables -->
-    <div class="income-expense">
-        <div class="box">
-            <div class="box-header">
-                <h2>Income</h2>
-                <button type="button" class="add-btn-expandable" id="openIncomeModalBtn">
-                    <img src="{% static 'tracker/icons/add-icon.svg' %}" class="icon-svg">Add Income
-                </button>
-
-                <div id="incomeModal" class="modal">
-                <div class="modal-content">
-                    <span class="close" id="closeIncomeModal">&times;</span>
-                    <h2>Add Income</h2>
-                    {% include 'tracker/includes/add_transaction_form.html' with form_id="incomeForm" action_url='add_transaction' categories=income_categories today=today tx_type='income' %}
-                </div>
-                </div>
-            </div>
-            
-
-            <table class="income-table">
-                <tr><th>Category</th><th>Amount</th></tr>
-                {% for category, total in income_categories.items %}
-                    <tr><td>{{ category.icon }} {{ category }}</td><td>₹{{ total }}</td></tr>
-                {% endfor %}
-            </table>
-        </div>
-
-        <div class="box">
-            <div class="box-header">
-                <h2>Expense</h2>
-                <button type="button" class="add-btn-expandable" id="openExpenseModalBtn">
-                    <img src="{% static 'tracker/icons/add-icon.svg' %}" class="icon-svg">Add Expense
-                </button>
-                <!-- Expense Modal -->
-                <div id="expenseModal" class="modal">
-                <div class="modal-content">
-                    <span class="close" id="closeExpenseModal">&times;</span>
-                    <h2>Add Expense</h2>
-                    {% include 'tracker/includes/add_transaction_form.html' with form_id="expenseForm" action_url='add_transaction' categories=expense_categories today=today tx_type='expense' %}
-                </div>
-                </div>
-            </div>
-
-            <table class="expense-table">
-                <tr><th>Category</th><th>Amount</th></tr> 
-                {% for category, total in expense_categories.items %}
-                    <tr><td>{{ category.icon }} {{ category }}</td><td>₹{{ total }}</td></tr>
-                {% endfor %}
-            </table>
+    <div class="header">
+        <h1 class="app-title">Money Tracker</h1>
+        <div class="menu-buttons">
+            <button type="button" id="openCategoryModalBtn">🏷️ Categories</button>
         </div>
     </div>
 
+    <div class="page-content">
 
+        <!-- Income and Expense Tables -->
+        <div class="income-expense">
+            <div class="box">
+                <div class="box-header">
+                    <h2>Income</h2>
+                    <button type="button" class="add-btn-expandable" id="openIncomeModalBtn">
+                        <img src="{% static 'tracker/icons/add-icon.svg' %}" class="icon-svg">Add Income
+                    </button>
 
-    <!-- Records and Graph -->
-    <div class="bottom-section">
-        <div class="records">
-            <h2>Daily Transactions</h2>
-            {% regroup transactions by date as grouped_transactions %}
-
-            {% for group in grouped_transactions %}
-                <div class="date-label-container">
-                    <div class="date-label">{{ group.grouper|date:"d, M" }}</div>
-                    <hr class="date-underline">
+                    <div id="incomeModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" id="closeIncomeModal">&times;</span>
+                        <h2>Add Income</h2>
+                        {% include 'tracker/includes/add_transaction_form.html' with form_id="incomeForm" action_url='add_transaction' categories=income_categories today=today tx_type='income' %}
+                    </div>
+                    </div>
                 </div>
-                {% for tx in group.list %}
-                    <div class="record-item"
-                        data-id="{{ tx.id }}"
-                        data-type="{{ tx.type }}"
-                        data-category="{{ tx.category }}"
-                        data-note="{{ tx.note }}"
-                        data-amount="{{ tx.amount }}"
-                        data-date="{{ tx.date|date:'Y-m-d' }}">
-                        
-                        <span class="record-icon">{{ tx.category.icon }}</span>
-                        <div class="record-info">
-                            <div class="record-details">
-                                <div class="category">{{ tx.category }}</div>
-                                <div class="note">{{ tx.note }}</div>
-                            </div>
-                            <div class="amount {% if tx.type == 'income' %}income{% else %}expense{% endif %}">
-                                {% if tx.type == 'expense' %}-{% endif %}₹{{ tx.amount }}
+                
+
+                <table class="income-table">
+                    <tr><th>Category</th><th>Amount</th></tr>
+                    {% for category, total in income_categories.items %}
+                        <tr><td>{{ category.icon }} {{ category }}</td><td>₹{{ total }}</td></tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <div class="box">
+                <div class="box-header">
+                    <h2>Expense</h2>
+                    <button type="button" class="add-btn-expandable" id="openExpenseModalBtn">
+                        <img src="{% static 'tracker/icons/add-icon.svg' %}" class="icon-svg">Add Expense
+                    </button>
+                    <!-- Expense Modal -->
+                    <div id="expenseModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" id="closeExpenseModal">&times;</span>
+                        <h2>Add Expense</h2>
+                        {% include 'tracker/includes/add_transaction_form.html' with form_id="expenseForm" action_url='add_transaction' categories=expense_categories today=today tx_type='expense' %}
+                    </div>
+                    </div>
+                </div>
+
+                <table class="expense-table">
+                    <tr><th>Category</th><th>Amount</th></tr> 
+                    {% for category, total in expense_categories.items %}
+                        <tr><td>{{ category.icon }} {{ category }}</td><td>₹{{ total }}</td></tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+
+
+        <!-- Records and Graph -->
+        <div class="bottom-section">
+            <div class="records">
+                <h2>Daily Transactions</h2>
+                {% regroup transactions by date as grouped_transactions %}
+
+                {% for group in grouped_transactions %}
+                    <div class="date-label-container">
+                        <div class="date-label">{{ group.grouper|date:"d, M" }}</div>
+                        <hr class="date-underline">
+                    </div>
+                    {% for tx in group.list %}
+                        <div class="record-item"
+                            data-id="{{ tx.id }}"
+                            data-type="{{ tx.type }}"
+                            data-category="{{ tx.category }}"
+                            data-note="{{ tx.note }}"
+                            data-amount="{{ tx.amount }}"
+                            data-date="{{ tx.date|date:'Y-m-d' }}">
+                            
+                            <span class="record-icon">{{ tx.category.icon }}</span>
+                            <div class="record-info">
+                                <div class="record-details">
+                                    <div class="category">{{ tx.category }}</div>
+                                    <div class="note">{{ tx.note }}</div>
+                                </div>
+                                <div class="amount {% if tx.type == 'income' %}income{% else %}expense{% endif %}">
+                                    {% if tx.type == 'expense' %}-{% endif %}₹{{ tx.amount }}
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
-        </div>
+            </div>
 
 
-        <div class="graph">
-            <h2>Statistics</h2>
-            <div class="chart-layout">
-                <!-- Wide container for both bar and line charts -->
-                <div class="chart-item wide">
-                    <h3>Monthly Summary</h3>
-                    <canvas id="barChart"></canvas>
-                    <h3 style="margin-top: 1rem;">Income vs Expense Trend</h3>
-                    <canvas id="trendLineChart"></canvas>
-                </div>
+            <div class="graph">
+                <h2>Statistics</h2>
+                <div class="chart-layout">
+                    <!-- Wide container for both bar and line charts -->
+                    <div class="chart-item wide">
+                        <h3>Monthly Summary</h3>
+                        <canvas id="barChart"></canvas>
+                        <h3 style="margin-top: 1rem;">Income vs Expense Trend</h3>
+                        <canvas id="trendLineChart"></canvas>
+                    </div>
 
-                <!-- Expense Breakdown -->
-                <div class="chart-item small">
-                    <h3>Expense Breakdown</h3>
-                    <canvas id="pieChart"></canvas>
-                </div>
+                    <!-- Expense Breakdown -->
+                    <div class="chart-item small">
+                        <h3>Expense Breakdown</h3>
+                        <canvas id="pieChart"></canvas>
+                    </div>
 
-                <!-- Cumulative Balance -->
-                <div class="chart-item small">
-                    <h3>Cumulative Balance</h3>
-                    <canvas id="lineChart"></canvas>
+                    <!-- Cumulative Balance -->
+                    <div class="chart-item small">
+                        <h3>Cumulative Balance</h3>
+                        <canvas id="lineChart"></canvas>
+                    </div>
                 </div>
             </div>
+
         </div>
 
-    </div>
 
+        
+        <!-- <button type="button" class="add-btn-expandable" id="openCategoryModalBtn">
+            <img src="{% static 'tracker/icons/add-icon.svg' %}" class="icon-svg">Add Income
+        </button> -->
 
-    
-    <button type="button" class="add-btn-expandable" id="openCategoryModalBtn">
-        <img src="{% static 'tracker/icons/add-icon.svg' %}" class="icon-svg">Add Income
-    </button>
-
-    <div id="categoryModal" class="cat-modal">
-        <div class="cat-modal-content">
-            <span class="close" id="closeCategoryModalBtn">&times;</span>
-            {% include 'tracker/includes/modify_category_form.html' with form_id="categoryForm" income_categories=income_categories expense_categories=expense_categories %}
+        <div id="categoryModal" class="cat-modal">
+            <div class="cat-modal-content">
+                <span class="close" id="closeCategoryModalBtn">&times;</span>
+                {% include 'tracker/includes/modify_category_form.html' with form_id="categoryForm" income_categories=income_categories expense_categories=expense_categories %}
+            </div>
         </div>
     </div>
-
 
 
 

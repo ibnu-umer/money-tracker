@@ -1,8 +1,46 @@
-/* General Reset & Base */
 body {
     font-family: sans-serif;
-    margin: 20px;
+    margin: 0px;
 }
+
+.page-content {
+  margin: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #222;
+  color: white;
+}
+
+.menu-buttons {
+  display: flex-end;
+  gap: 10px;
+}
+
+.menu-buttons button {
+  padding: 8px 12px;
+  background-color: #444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.menu-buttons button:hover {
+  background-color: #666;
+}
+
+.app-title {
+  margin: 0;
+  font-size: 24px;
+}
+
+
+
 
 .icon-svg {
     filter: invert(36%) sepia(64%) saturate(363%) hue-rotate(100deg) brightness(90%) contrast(85%);
