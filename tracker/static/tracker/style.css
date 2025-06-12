@@ -424,8 +424,12 @@ textarea {
 
 .form-buttons {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex;
     gap: 10px;
+}
+
+.form-buttons button {
+  flex: 1;
 }
 
 
@@ -481,24 +485,33 @@ textarea {
 }
 
 
-.form-buttons button {
-    padding: 8px 16px;
-    font-size: 14px;
+.submit-btn {
+    background-color: #28a745; /* Green */
+    color: white;
+}
+
+.submit-btn:hover {
+    background-color: #218838;
+}
+
+/* Delete button */
+.delete-btn {
+    background-color: #dc3545; 
+    border: none;
+    border-radius: 8px;
+    color: white;
     cursor: pointer;
-    background-color: #e2eefc;
-    border-color: #c9e2ff;
-    border-radius: 10px;
 }
 
-
-.form-buttons button:disabled {
-    background-color: #c4c4c4;
-    border-color: #a2a2a2;
+.delete-btn:hover {
+    background-color: #c82333;
 }
 
-.form-buttons button:disabled:hover {
-    background-color: #c4c4c4;
-    border-color: #a2a2a2;
+/* Delete button (disabled) */
+.delete-btn:disabled {
+    background-color: #dc3545;
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 
