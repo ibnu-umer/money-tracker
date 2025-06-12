@@ -362,6 +362,7 @@
     };
     closeBtn.onclick = () => {
         categoryModal.style.display = "none";
+        resetCatForm()
     };
 
 
@@ -387,6 +388,17 @@
         emojiPicker.style.display = 'none';
         }
     });
+
+
+    function resetCatForm() {
+        const form = document.getElementById('categoryForm');
+        if (form) {
+            form.reset();  // clears most inputs
+            emojiBtn.textContent = '😄';
+            formWarns.style.display = 'none';
+            editBtn.disabled = true;
+        }
+    }
 
     // Update emoji on click
     emojiPicker.addEventListener('emoji-click', (event) => {
@@ -431,6 +443,7 @@
         if (event.target === categoryModal) {
             categoryModal.style.display = "none";
             document.getElementById("categoryForm").reset();
+            resetCatForm()
         }
     };
 
