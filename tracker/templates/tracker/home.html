@@ -391,6 +391,17 @@
 
 
 
+    const categoryItems = document.querySelectorAll('.category-item');
+    const categoryNameInput = document.getElementById('categoryNameInput');
+
+    categoryItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            const [emoji, ...nameParts] = item.textContent.trim().split(' ');
+            const categoryName = nameParts.join(' ');
+            categoryNameInput.value = categoryName;
+            emojiBtn.textContent = emoji;
+        });
+    });
 
 
     window.onclick = function (event) {

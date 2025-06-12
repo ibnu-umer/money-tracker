@@ -7,13 +7,13 @@
       <div class="category-list" id="categoryList">
 
         {% for category in income_categories %}
-        <div class="category-item" data-id="{{ category.id }}">
+        <div id="categoryItem" class="category-item" data-id="{{ category.id }}">
           {{ category.icon }} {{ category.name }}
         </div>
         {% endfor %}
 
         {% for category in expense_categories %}
-        <div class="category-item" data-id="{{ category.id }}">
+        <div id="categoryItem" class="category-item" data-id="{{ category.id }}">
           {{ category.icon }} {{ category.name }}
         </div>
         {% endfor %}
@@ -30,7 +30,7 @@
         <!-- Emoji Picker Button + Hidden Input -->
         <button type="button" id="emojiInput" class="emoji-button">😄</button>
         <input type="hidden" name="icon" id="iconInput" value="😄" />
-        <input type="text" name="name" placeholder="Category Name" required style="flex: 1;">
+        <input id="categoryNameInput" type="text" name="name" placeholder="Category Name" required style="flex: 1;">
       </div>
 
       <div class="form-buttons">
