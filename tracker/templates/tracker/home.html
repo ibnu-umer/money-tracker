@@ -407,6 +407,7 @@
             emojiBtn.textContent = '😄';
             formWarns.style.display = 'none';
             editBtn.disabled = true;
+            deleteBtn.disabled = true;
         }
     }
 
@@ -424,11 +425,13 @@
     const idInput = document.getElementById('idInput')
     const categoryNameInput = document.getElementById('categoryNameInput');
     const editBtn = document.getElementById('editBtn')
+    const deleteBtn = document.getElementById('deleteBtn')
     const formWarns = document.getElementById('formWarns')
     const warningLabel = document.getElementById('warningLabel')
     const clearBtn = document.getElementById('clearBtn')
     const typeSelector = document.getElementById('typeSelector')
     editBtn.disabled = true;
+    deleteBtn.disabled = true;
 
     categoryItems.forEach(item => {
         item.addEventListener('click', (e) => {
@@ -439,6 +442,7 @@
             categoryNameInput.value = categoryName;
             emojiBtn.textContent = emoji;
             editBtn.disabled = false;
+            deleteBtn.disabled = false;
             warningLabel.textContent = emoji + ' ' + categoryName 
             formWarns.style.display = 'flex';  // show the warning label with clear button
             typeSelector.value = type_sel
@@ -446,6 +450,11 @@
         });
     });
 
+
+    clearBtn.addEventListener('click', function () {
+        document.getElementById("categoryForm").reset();
+        resetCatForm()
+    });
 
     window.onclick = function (event) {
         if (event.target === incomeModal) {
