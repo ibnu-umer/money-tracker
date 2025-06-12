@@ -361,7 +361,22 @@ textarea {
     padding: 8px 16px;
     font-size: 14px;
     cursor: pointer;
+    background-color: #e2eefc;
+    border-color: #c9e2ff;
+    border-radius: 10px;
 }
+
+
+.form-buttons button:disabled {
+    background-color: #969696;
+    border-color: #c9e2ff;
+}
+
+
+.form-buttons button:hover {
+    border-color: #0056b3;
+}
+
 
 .emojiPicker {
     position: absolute;
