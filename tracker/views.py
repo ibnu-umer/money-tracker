@@ -129,25 +129,32 @@ def add_transaction(request):
 
 def edit_transaction(request):
     if request.method == 'POST':
-        old_data = ast.literal_eval(request.POST.get('old_data'))
+        action = request.POST.get('action')
         tx_id = request.POST.get('tx_id')
-        category_name = request.POST.get('category')
-        note = request.POST.get('note')
-        amount = request.POST.get('amount')
-        date = request.POST.get('date')
         
-        transaction = get_object_or_404(Transaction, id=tx_id)
-        category_obj = get_object_or_404(
-                Category,
-                name=category_name,
-                type=old_data.get('type')
-        )
+        if action == 'save':
+            old_data = ast.literal_eval(request.POST.get('old_data'))
+            category_name = request.POST.get('category')
+            note = request.POST.get('note')
+            amount = request.POST.get('amount')
+            date = request.POST.get('date')
+            
+            transaction = get_object_or_404(Transaction, id=tx_id)
+            category_obj = get_object_or_404(
+                    Category,
+                    name=category_name,
+                    type=old_data.get('type')
+            )
+            
+            transaction.category = category_obj
+            transaction.note = note
+            transaction.amount = amount
+            transaction.date = date
+            transaction.save()
         
-        transaction.category = category_obj
-        transaction.note = note
-        transaction.amount = amount
-        transaction.date = date
-        transaction.save()
+        elif action == 'delete':
+           Transaction.objects.filter(id=tx_id).delete()
+           messages.success(request, "Transaction deleted successfully.")
         
         return redirect('home')
 
