@@ -23,27 +23,40 @@
 
     <!-- Right-side form -->
     <div class="form-content">
-      <!-- Hidden Emoji Picker -->
-      <emoji-picker id="emojiPicker"></emoji-picker>
+        <div>
+        <!-- Hidden Emoji Picker -->
+        <emoji-picker id="emojiPicker"></emoji-picker>
 
-      <div class="form-fields">
-        <!-- Emoji Picker Button + Hidden Input -->
-        <button type="button" id="emojiInput" class="emoji-button">😄</button>
-        <input type="hidden" name="icon" id="iconInput" value="😄" />
-        <input id="categoryNameInput" type="text" name="name" placeholder="Category Name" required style="flex: 1;">
-      </div>
+        <div class="form-fields">
+            <!-- Emoji Picker Button + Hidden Input -->
+            <button type="button" id="emojiInput" class="emoji-button">😄</button>
+            <input type="hidden" name="icon" id="iconInput" value="😄" />
+            <input id="categoryNameInput" type="text" name="name" placeholder="Category Name" required style="flex: 1;">
+        </div>
 
-    <div id="formWarns" class="form-warns" >
-        <label id="warningLabel"></label>
-        <label id="warningLabel2">Editing this will make changes in the saved data.</label>
-        <button id="clearBtn" class="form-clear-btn">clear</button>
+        <div class="form-fields">
+        <select id="typeSelector" name="type" required>
+            <option value="" disabled selected hidden>Select Type</option>
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+        </select>
+        </div>
+
+
+        <div id="formWarns" class="form-warns" >
+            <label id="warningLabel"></label>
+            <label id="warningLabel2">Editing this will make changes in the saved data.</label>
+            <button id="clearBtn" class="form-clear-btn">clear</button>
+        </div>
     </div>
 
+    <div>
       <div class="form-buttons">
         <button id="addBtn" type="submit" name="action" value="add">Add</button>
         <button id="editBtn" type="submit" name="action" value="edit">Edit</button>
         <button id="deleteBtn" type="submit" name="action" value="delete">Delete</button>
       </div>
+    </div>
     </div>
   </div>
 </form>
