@@ -411,6 +411,7 @@
 
 
     const categoryItems = document.querySelectorAll('.category-item');
+    const idInput = document.getElementById('idInput')
     const categoryNameInput = document.getElementById('categoryNameInput');
     const editBtn = document.getElementById('editBtn')
     const formWarns = document.getElementById('formWarns')
@@ -431,6 +432,7 @@
             warningLabel.textContent = emoji + ' ' + categoryName 
             formWarns.style.display = 'flex';  // show the warning label with clear button
             typeSelector.value = type_sel
+            idInput.value = id
         });
     });
 

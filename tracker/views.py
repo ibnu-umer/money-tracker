@@ -157,13 +157,19 @@ def manage_categories(request):
         action = request.POST.get('action')
         icon = request.POST.get('icon')
         name = request.POST.get('name')
-        category_id = request.POST.get('category_id')
+        category_id = request.POST.get('id')
+        tx_type = request.POST.get('type')
 
         if action == 'add':
-            Category.objects.create(name=name, icon=icon, type='expense')  # or 'income'
-        elif action == 'edit' and category_id:
+            Category.objects.create(name=name, icon=icon, type=tx_type)  
+            
+        elif action == 'edit' and category_id: 
             Category.objects.filter(id=category_id).update(name=name, icon=icon)
+            
         elif action == 'delete' and category_id:
-            Category.objects.filter(id=category_id).delete()
+            Transaction.objects.filter(category_id=category_id)
+            has_data = Transaction.objects.filter(category_id=category_id).exists()
+            if not has_data: # if the category has no data exist
+                Category.objects.filter(id=category_id).delete()
 
         return redirect('home')  

@@ -429,6 +429,39 @@ textarea {
 }
 
 
+.popup-message {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.popup {
+  background-color: #333;
+  color: #fff;
+  padding: 12px 20px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  opacity: 0.9;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* Optional: Different styles for different tags */
+.popup.success {
+  background-color: #28a745;
+}
+.popup.error {
+  background-color: #dc3545;
+}
+.popup.warning {
+  background-color: #ffc107;
+  color: #000;
+}
+.popup.info {
+  background-color: #17a2b8;
+}
+
 
 .form-fields select {
   padding: 12px;
