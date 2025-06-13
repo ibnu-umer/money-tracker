@@ -282,7 +282,7 @@
     const closeIncomeBtn = document.getElementById("closeIncomeModal");
 
     openIncomeBtn.onclick = () => {
-        incomeModal.style.display = "block";
+        incomeModal.style.display = "flex";
     };
 
     closeIncomeBtn.onclick = () => {
@@ -299,7 +299,7 @@
 
 
     openExpenseBtn.onclick = () => {
-        expenseModal.style.display = "block";
+        expenseModal.style.display = "flex";
     };
 
     closeExpenseBtn.onclick = () => {
@@ -319,10 +319,10 @@
             const txType = this.getAttribute('data-type');
 
             if (txType === 'income') {
-                incomeModal.style.display = "block";
+                incomeModal.style.display = "flex";
                 if (incDeleteBtn) incDeleteBtn.disabled = false;
             } else if (txType === 'expense') {
-                expenseModal.style.display = "block";
+                expenseModal.style.display = "flex";
                 if (expDeleteBtn) expDeleteBtn.disabled = false;
             }
 
