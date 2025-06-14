@@ -25,7 +25,10 @@
         <h1 class="app-title">Money Tracker</h1>
         <div class="menu-buttons">
             <button type="button" id="openCategoryModalBtn">🏷️ Categories</button>
-            <a href="{% url 'logout' %}">Logout</a>
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" style="height:34px;">Logout</button>
+            </form>
         </div>
     </div>
 
