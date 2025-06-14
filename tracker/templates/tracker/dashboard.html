@@ -36,6 +36,8 @@
 
 
     <div class="months-bar" id="monthsBar">
+        <input hidden id="selectedMonth" value="{{ selected_month }}">
+        <input hidden id="selectedYear" value="{{ selected_year }}"> 
         <select id="yearSelect" class="year-selector"></select>
         <div class="month-buttons">
 
@@ -185,9 +187,13 @@
     <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
     <script>
 
+    let selectedYear = document.getElementById('selectedYear').value;
+    let selectedMonth = document.getElementById('selectedMonth').value;
+
 
     const yearSelect = document.getElementById('yearSelect');
     const currentYear = new Date().getFullYear();
+    
     const stopYear = currentYear - 10;
 
     // Fill year dropdown
@@ -196,17 +202,10 @@
         option.value = year;
         option.textContent = year;
 
-        // Pre-select current year
-        if (year === currentYear) {
-            option.selected = true;
-        }
-
         yearSelect.appendChild(option);
     }
+    yearSelect.value = selectedYear;
 
-    // Declare state variables
-    let selectedMonth = new Date().getMonth() + 1; // Default: current month
-    let selectedYear = currentYear;
 
     function redirectToSelectedMonth(month, year) {
         window.location.href = `/dashboard/?month=${month}&year=${year}`;
@@ -229,6 +228,7 @@
         selectedYear = parseInt(yearSelect.value);
         redirectToSelectedMonth(selectedMonth, selectedYear);
     });
+
 
 
     const barCtx = document.getElementById('barChart').getContext('2d');
