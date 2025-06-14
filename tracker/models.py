@@ -15,9 +15,9 @@ class Category(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
 
-    # def save(self, *args, **kwargs):
-    #     self.name = self.name.capitalize()  
-    #     super().save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        self.name = self.name.capitalize()  
+        super().save(*args, **kwargs)
     
 
     def __str__(self):
