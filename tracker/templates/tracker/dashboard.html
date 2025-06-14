@@ -38,20 +38,11 @@
     <div class="months-bar" id="monthsBar">
         <select id="yearSelect" class="year-selector"></select>
         <div class="month-buttons">
-            <button class="month">Jan</button>
-            <button class="month">Feb</button>
-            <button class="month">Mar</button>
-            <button class="month">Apr</button>
-            <button class="month">May</button>
-            <button class="month">Jun</button>
-            <button class="month">Jul</button>
-            <button class="month">Aug</button>
-            <button class="month">Sep</button>
-            <button class="month">Oct</button>
-            <button class="month">Nov</button>
-            <button class="month">Dec</button>
+
+            {% for i, name in months %}
+                <button class="month" data-month="{{ i }}">{{ name }}</button>
+            {% endfor %}
         </div>
-        
     </div>
 
 
@@ -199,6 +190,7 @@
     const currentYear = new Date().getFullYear();
     const stopYear = currentYear - 10;
 
+    // Fill year dropdown
     for (let year = currentYear; year >= stopYear; year--) {
         const option = document.createElement('option');
         option.value = year;
@@ -206,22 +198,37 @@
 
         // Pre-select current year
         if (year === currentYear) {
-        option.selected = true;
+            option.selected = true;
         }
 
         yearSelect.appendChild(option);
     }
 
+    // Declare state variables
+    let selectedMonth = new Date().getMonth() + 1; // Default: current month
+    let selectedYear = currentYear;
 
-        const monthButtons = document.querySelectorAll('#monthsBar .month');
-        const currentMonthIndex = new Date().getMonth();
-        monthButtons[currentMonthIndex].classList.add('active');
-        monthButtons.forEach(button => {
-            button.addEventListener('click', () => {
-            monthButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-            });
+    function redirectToSelectedMonth(month, year) {
+        window.location.href = `/dashboard/?month=${month}&year=${year}`;
+    }
+
+    // Month button click
+    const monthButtons = document.querySelectorAll('#monthsBar .month');
+    monthButtons.forEach((btn, index) => {
+        btn.addEventListener('click', () => {
+            monthButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            selectedMonth = index + 1;
+            redirectToSelectedMonth(selectedMonth, selectedYear);
         });
+    });
+
+    // Year selector change
+    yearSelect.addEventListener('change', () => {
+        selectedYear = parseInt(yearSelect.value);
+        redirectToSelectedMonth(selectedMonth, selectedYear);
+    });
 
 
     const barCtx = document.getElementById('barChart').getContext('2d');

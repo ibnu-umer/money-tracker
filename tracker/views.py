@@ -5,19 +5,33 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import SignUpForm, LoginForm
+from django.http import JsonResponse
 from django.contrib import messages
 from .models import Category, Transaction, HiddenCategory
 from dateutil.relativedelta import relativedelta
-from django.db.models.functions import TruncMonth
+from django.db.models.functions import TruncMonth, TruncDay
 from django.db.models import Sum
 from django.utils.timezone import now
 import datetime
+import calendar
 import ast
 
 
 
 @login_required(login_url='login') 
 def dashboard(request):
+    
+    # Get selected month/year from query params (or use current)
+    month = int(request.GET.get('month', datetime.date.today().month))
+    year = int(request.GET.get('year', datetime.date.today().year))
+    
+    # Define date range for the selected month
+    start_date = datetime.date(year, month, 1)
+    if month == 12:
+        end_date = datetime.date(year + 1, 1, 1) - datetime.timedelta(days=1)
+    else:
+        end_date = datetime.date(year, month + 1, 1) - datetime.timedelta(days=1)
+    
     
     hidden_ids = HiddenCategory.objects.filter(user=request.user).values_list('category_id', flat=True)
     
@@ -34,7 +48,10 @@ def dashboard(request):
     
     # Retrieve transaction data for the current month
     current_month_start = now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-    transactions = Transaction.objects.filter(user=request.user, date__gte=current_month_start).order_by('-date')
+    transactions = Transaction.objects.filter(
+        user=request.user,
+        date__range=(start_date, end_date)
+    ).order_by('-date')
     
     
     #! Data for Category table
@@ -118,9 +135,44 @@ def dashboard(request):
             'pie_chart_data': pie_chart_data,
             'chart_labels': chart_labels,
             'bar_chart_data': bar_chart_data,
-            'balance_data': balance_data
+            'balance_data': balance_data,
+            'months': [(i, calendar.month_abbr[i]) for i in range(1, 13)]
         }
     )
+    
+    
+    
+    
+
+
+def fetch_monthly_data(request):
+    month = int(request.GET.get('month'))
+    year = int(request.GET.get('year'))
+
+    start_date = datetime.date(year, month, 1)
+    if month == 12:
+        end_date = datetime.date(year + 1, 1, 1) - datetime.timedelta(days=1)
+    else:
+        end_date = datetime.date(year, month + 1, 1) - datetime.timedelta(days=1)
+
+    transactions = (
+        Transaction.objects.filter(
+            user=request.user,
+            type='expense',
+            date__range=(start_date, end_date)
+        )
+        .annotate(day=TruncDay('date'))
+        .values('day')
+        .annotate(total=Sum('amount'))
+        .order_by('day')
+    )
+
+    return JsonResponse(list(transactions), safe=False)
+
+    
+    
+    
+    
     
 
 @login_required(login_url='login')

@@ -11,4 +11,5 @@ urlpatterns = [
     path('signup/', views.signup_view, name='signup'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
+    path('fetch-monthly-data/', views.fetch_monthly_data, name='fetch_monthly_data'),
 ]
