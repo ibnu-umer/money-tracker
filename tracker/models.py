@@ -16,12 +16,13 @@ class Category(models.Model):
 
 
     # def save(self, *args, **kwargs):
-    #     self.name = self.name.capitalize()  # Or .upper() for full caps
+    #     self.name = self.name.capitalize()  
     #     super().save(*args, **kwargs)
     
 
     def __str__(self):
         return f'{self.name}'
+
 
 
 class Transaction(models.Model):
@@ -35,3 +36,9 @@ class Transaction(models.Model):
 
 
     
+class HiddenCategory(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('user', 'category')

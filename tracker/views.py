@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import SignUpForm, LoginForm
 from django.contrib import messages
-from .models import Category, Transaction
+from .models import Category, Transaction, HiddenCategory
 from dateutil.relativedelta import relativedelta
 from django.db.models.functions import TruncMonth
 from django.db.models import Sum
@@ -18,15 +18,18 @@ import ast
 
 @login_required(login_url='login') 
 def home(request):
+    
+    hidden_ids = HiddenCategory.objects.filter(user=request.user).values_list('category_id', flat=True)
+    
     income_categories = Category.objects.filter(
         Q(user=request.user) | Q(user__isnull=True),
         type='income'
-    ).order_by('name')
+    ).exclude(id__in=hidden_ids).order_by('name')
 
     expense_categories = Category.objects.filter(
         Q(user=request.user) | Q(user__isnull=True),
         type='expense'
-    ).order_by('name')
+    ).exclude(id__in=hidden_ids).order_by('name')
     
     
     # Retrieve transaction data for the current month
@@ -201,7 +204,14 @@ def manage_categories(request):
                 messages.error(request, "This category cannot be deleted as it has associated transactions.")
             else:
                 messages.success(request, "Category deleted successfull.")
-                Category.objects.filter(id=category_id, user=request.user).delete()
+                obj = Category.objects.filter(id=category_id, user=request.user)
+                if obj:
+                    obj.delete() # delete if user created object
+                else:  # Hide from the user by saving the categroy id and user id by filtering 
+                    HiddenCategory.objects.create(
+                        category=Category.objects.get(id=category_id),
+                        user=request.user
+                    )
 
         return redirect('home')  
     
