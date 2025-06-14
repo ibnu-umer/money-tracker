@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout
 from django.contrib.auth import authenticate, login
+from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import SignUpForm, LoginForm
@@ -17,12 +18,20 @@ import ast
 
 @login_required(login_url='login') 
 def home(request):
-    income_categories = Category.objects.filter(type='income').order_by('name')
-    expense_categories = Category.objects.filter(type='expense').order_by('name')
+    income_categories = Category.objects.filter(
+        Q(user=request.user) | Q(user__isnull=True),
+        type='income'
+    ).order_by('name')
+
+    expense_categories = Category.objects.filter(
+        Q(user=request.user) | Q(user__isnull=True),
+        type='expense'
+    ).order_by('name')
+    
     
     # Retrieve transaction data for the current month
     current_month_start = now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-    transactions = Transaction.objects.filter(date__gte=current_month_start).order_by('-date')
+    transactions = Transaction.objects.filter(user=request.user, date__gte=current_month_start).order_by('-date')
     
     
     #! Data for Category table
@@ -53,6 +62,7 @@ def home(request):
     start_month = current_month_start - relativedelta(months=3)
     monthly_expenses = (
         Transaction.objects.filter(
+            user=request.user,
             type='expense',
             date__gte=start_month,
             date__lte=datetime.date.today()
@@ -65,6 +75,7 @@ def home(request):
     
     monthly_incomes = (
         Transaction.objects.filter(
+            user=request.user,
             type='income',
             date__gte=start_month,
             date__lte=datetime.date.today()
@@ -109,7 +120,7 @@ def home(request):
     )
     
 
-
+@login_required(login_url='login')
 def add_transaction(request):
     if request.method == 'POST':
         date = request.POST.get('date')
@@ -127,12 +138,14 @@ def add_transaction(request):
             amount=amount,
             type=tx_type,
             note=note,
+            user= request.user
+
         )
         
         return redirect('home')
     
     
-
+@login_required(login_url='login')
 def edit_transaction(request):
     if request.method == 'POST':
         action = request.POST.get('action')
@@ -165,7 +178,7 @@ def edit_transaction(request):
         return redirect('home')
 
 
-
+@login_required(login_url='login')
 def manage_categories(request):
     if request.method == 'POST':
         action = request.POST.get('action')
@@ -175,20 +188,20 @@ def manage_categories(request):
         tx_type = request.POST.get('type')
 
         if action == 'add':
-            Category.objects.create(name=name, icon=icon, type=tx_type)  
+            Category.objects.create(user=request.user, name=name, icon=icon, type=tx_type)  
             
-        elif action == 'edit' and category_id: 
-            Category.objects.filter(id=category_id).update(name=name, icon=icon)
+        elif action == 'edit' and category_id:
+            Category.objects.filter(id=category_id, user=request.user).update(name=name, icon=icon)
             
         elif action == 'delete' and category_id:
             Transaction.objects.filter(category_id=category_id)
-            has_data = Transaction.objects.filter(category_id=category_id).exists()
+            has_data = Transaction.objects.filter(category_id=category_id, user=request.user).exists()
            
             if has_data: # if the category has no data exist
                 messages.error(request, "This category cannot be deleted as it has associated transactions.")
             else:
                 messages.success(request, "Category deleted successfull.")
-                Category.objects.filter(id=category_id).delete()
+                Category.objects.filter(id=category_id, user=request.user).delete()
 
         return redirect('home')  
     
