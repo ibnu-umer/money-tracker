@@ -17,7 +17,7 @@ import ast
 
 
 @login_required(login_url='login') 
-def home(request):
+def dashboard(request):
     
     hidden_ids = HiddenCategory.objects.filter(user=request.user).values_list('category_id', flat=True)
     
@@ -107,7 +107,7 @@ def home(request):
 
     
     return render(
-        request, 'tracker/home.html',
+        request, 'tracker/dashboard.html',
         {
             'transactions': transactions, 
             'income_categories': table_data['income'],
@@ -145,7 +145,7 @@ def add_transaction(request):
 
         )
         
-        return redirect('home')
+        return redirect('dashboard')
     
     
 @login_required(login_url='login')
@@ -178,7 +178,7 @@ def edit_transaction(request):
            Transaction.objects.filter(id=tx_id).delete()
            messages.success(request, "Transaction deleted successfully.")
         
-        return redirect('home')
+        return redirect('dashboard')
 
 
 @login_required(login_url='login')
@@ -213,7 +213,7 @@ def manage_categories(request):
                         user=request.user
                     )
 
-        return redirect('home')  
+        return redirect('dashboard')  
     
     
     
@@ -223,7 +223,7 @@ def signup_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user) 
-            return redirect('home')  
+            return redirect('dashboard')  
     else:
         form = SignUpForm()
     return render(request, 'auth/signup.html', {'form': form})
@@ -236,7 +236,7 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('home')  
+            return redirect('dashboard')  
     else:
         form = AuthenticationForm()
     return render(request, 'auth/login.html', {'form': form})
