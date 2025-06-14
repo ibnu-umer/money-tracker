@@ -131,6 +131,8 @@ def dashboard(request):
             'expense_categories': table_data['expense'],
             'table_data': table_data,
             'today': datetime.date.today().isoformat(),
+            'selected_month': month,
+            'selected_year': year,
             'pie_chart_labels': pie_chart_lables,
             'pie_chart_data': pie_chart_data,
             'chart_labels': chart_labels,

@@ -40,7 +40,7 @@
         <div class="month-buttons">
 
             {% for i, name in months %}
-                <button class="month" data-month="{{ i }}">{{ name }}</button>
+                <button class="month {% if selected_month == i %}active{% endif %}" data-month="{{ i }}">{{ name }}</button>
             {% endfor %}
         </div>
     </div>
