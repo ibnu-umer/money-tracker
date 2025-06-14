@@ -34,6 +34,27 @@
 
     <div class="page-content">
 
+
+    <div class="months-bar" id="monthsBar">
+        <select id="yearSelect" class="year-selector"></select>
+        <div class="month-buttons">
+            <button class="month">Jan</button>
+            <button class="month">Feb</button>
+            <button class="month">Mar</button>
+            <button class="month">Apr</button>
+            <button class="month">May</button>
+            <button class="month">Jun</button>
+            <button class="month">Jul</button>
+            <button class="month">Aug</button>
+            <button class="month">Sep</button>
+            <button class="month">Oct</button>
+            <button class="month">Nov</button>
+            <button class="month">Dec</button>
+        </div>
+        
+    </div>
+
+
         <!-- Income and Expense Tables -->
         <div class="income-expense">
             <div class="box">
@@ -172,6 +193,37 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
     <script>
+
+
+    const yearSelect = document.getElementById('yearSelect');
+    const currentYear = new Date().getFullYear();
+    const stopYear = currentYear - 10;
+
+    for (let year = currentYear; year >= stopYear; year--) {
+        const option = document.createElement('option');
+        option.value = year;
+        option.textContent = year;
+
+        // Pre-select current year
+        if (year === currentYear) {
+        option.selected = true;
+        }
+
+        yearSelect.appendChild(option);
+    }
+
+
+        const monthButtons = document.querySelectorAll('#monthsBar .month');
+        const currentMonthIndex = new Date().getMonth();
+        monthButtons[currentMonthIndex].classList.add('active');
+        monthButtons.forEach(button => {
+            button.addEventListener('click', () => {
+            monthButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            });
+        });
+
+
     const barCtx = document.getElementById('barChart').getContext('2d');
 
     const chartLabels = {{ chart_labels|safe }};

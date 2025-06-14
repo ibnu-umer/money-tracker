@@ -49,11 +49,12 @@ body {
 
 .income-expense {
     display: flex;
-    gap: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
     align-items: stretch;
     margin-top: 2rem;
     margin-bottom: 2rem;
-    flex-wrap: wrap; /* optional for small screens */
+    flex-wrap: wrap; /* for small screens */
 }
 
 .box {
@@ -62,18 +63,69 @@ body {
     flex-direction: column;
     justify-content: flex-start;
     background: #fff;
-    padding: 1rem;
+    padding: 1% 2%;
     border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    min-height: 300px; /* Ensures minimum visible area */
+    min-height: 100px; /* Ensures minimum visible area */
 }
 
 .box-header {
+    height: 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
 }
+
+.months-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  font-family: sans-serif;
+  overflow-x: auto; /* Optional: horizontal scroll for small screens */
+  gap: 1rem;
+}
+
+.month-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: nowrap; 
+  overflow-x: auto;
+  flex-grow: 1;
+}
+
+.month {
+  white-space: nowrap;
+  padding: 0.5rem 0.75rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #e0e0e0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+.month:hover {
+  background-color: #ccc;
+}
+
+.month.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.year-selector {
+  padding: 0.5rem 0.75rem;
+  width: 100px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: white;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
 
 
 
