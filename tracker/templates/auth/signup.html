@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up</title>
+  <style>/* signup.css */
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.signup-container {
+    background: white;
+    padding: 2rem 3rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 420px;
+}
+
+.signup-container h2 {
+    text-align: center;
+    color: #00796b;
+    margin-bottom: 1.5rem;
+}
+
+.signup-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.signup-container label {
+    margin-top: 1rem;
+    color: #444;
+    font-weight: 500;
+}
+
+.signup-container input {
+    padding: 0.6rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.signup-container input:focus {
+    border-color: #009688;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 150, 136, 0.3);
+}
+
+.signup-container button {
+    margin-top: 1.5rem;
+    padding: 0.8rem;
+    background-color: #009688;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.signup-container button:hover {
+    background-color: #00796b;
+}
+
+.signup-container .switch-link {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.signup-container .switch-link a {
+    color: #009688;
+    text-decoration: none;
+}
+
+.signup-container .switch-link a:hover {
+    text-decoration: underline;
+}
+</style>
+</head>
+<body>
+  <div class="signup-container">
+    <h2>Create Account</h2>
+    <form method="POST">
+      {% csrf_token %}
+
+        <label for="id_username">Username</label>
+        {{ form.username }}
+        
+        <label for="id_email">Email</label>
+        {{ form.email }}
+        
+        <label for="id_password1">Password</label>
+        {{ form.password1 }}
+        
+        <label for="id_password2">Confirm Password</label>
+        {{ form.password2 }}
+        
+      <button type="submit">Sign Up</button>
+    </form>
+    <div class="switch-link">
+      Already have an account? <a href="{% url 'login' %}">Log in</a>
+    </div>
+  </div>
+</body>
+</html>
+</p>

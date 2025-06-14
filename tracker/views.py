@@ -1,4 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import logout
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
+from .forms import SignUpForm, LoginForm
 from django.contrib import messages
 from .models import Category, Transaction
 from dateutil.relativedelta import relativedelta
@@ -10,6 +15,7 @@ import ast
 
 
 
+@login_required(login_url='login') 
 def home(request):
     income_categories = Category.objects.filter(type='income').order_by('name')
     expense_categories = Category.objects.filter(type='expense').order_by('name')
@@ -185,3 +191,35 @@ def manage_categories(request):
                 Category.objects.filter(id=category_id).delete()
 
         return redirect('home')  
+    
+    
+    
+def signup_view(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user) 
+            return redirect('home')  
+    else:
+        form = SignUpForm()
+    return render(request, 'auth/signup.html', {'form': form})
+
+
+
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('home')  
+    else:
+        form = AuthenticationForm()
+    return render(request, 'auth/login.html', {'form': form})
+
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')
