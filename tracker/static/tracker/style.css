@@ -717,8 +717,9 @@ textarea {
 .graph {
     flex: 1;
     padding: 1rem;
-    background: #f0f0f0;
+    background: #ffffff;
     border-radius: 8px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Chart Layout */
@@ -733,7 +734,7 @@ textarea {
     background: white;
     padding: 1rem;
     border-radius: 8px;
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 0 6px rgba(97, 97, 97, 0.1); */
 }
 
 .chart-item h3 {
