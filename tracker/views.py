@@ -188,7 +188,12 @@ def add_transaction(request):
         
     
         # Add to transactions DB
-        cat = Category.objects.get(name=category, type=tx_type)
+        
+        # Check category in user created
+        cat = Category.objects.get(name=category, type=tx_type, user_id=request.user)
+        if not cat: # If not found, check in default
+            cat = Category.objects.get(name=category, type=tx_type)
+
         Transaction.objects.create(
             date=date, 
             category=cat,
