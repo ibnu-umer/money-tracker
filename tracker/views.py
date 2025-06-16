@@ -223,6 +223,7 @@ def edit_transaction(request):
             transaction = get_object_or_404(Transaction, id=tx_id)
             category_obj = get_object_or_404(
                     Category,
+                    user=request.user,
                     name=category_name,
                     type=old_data.get('type')
             )
@@ -250,13 +251,17 @@ def manage_categories(request):
         tx_type = request.POST.get('type')
 
         if action == 'add':
-            Category.objects.create(user=request.user, name=name, icon=icon, type=tx_type)  
+            cat_exists = Category.objects.filter(name=name, user=request.user, type=tx_type).exists()
+            if cat_exists:
+                messages.error(request, 'The category name is already used.')
+            else:
+                Category.objects.create(user=request.user, name=name, icon=icon, type=tx_type)  
+                messages.success(request, f'Successfully created categroy {name}')
             
         elif action == 'edit' and category_id:
-            Category.objects.filter(id=category_id, user=request.user).update(name=name, icon=icon)
+            Category.objects.filter(id=category_id, user=request.user).update(name=name, icon=icon, type=tx_type)
             
         elif action == 'delete' and category_id:
-            Transaction.objects.filter(category_id=category_id)
             has_data = Transaction.objects.filter(category_id=category_id, user=request.user).exists()
            
             if has_data: # if the category has no data exist
