@@ -1,4 +1,3 @@
 db.sqlite3
-
-# A test file
-sdf.html   
+__pycache__
+*.py[cod]
