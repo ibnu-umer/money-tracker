@@ -190,9 +190,9 @@ def add_transaction(request):
         # Add to transactions DB
         
         # Check category in user created
-        cat = Category.objects.get(name=category, type=tx_type, user_id=request.user)
+        cat = Category.objects.filter(name=category, type=tx_type, user_id=request.user)
         if not cat: # If not found, check in default
-            cat = Category.objects.get(name=category, type=tx_type)
+            cat = Category.objects.get(name=category, type=tx_type, user__isnull=True)
 
         Transaction.objects.create(
             date=date, 
