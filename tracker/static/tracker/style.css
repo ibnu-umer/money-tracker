@@ -594,11 +594,9 @@ textarea {
 
 /* Records Widget */
 .records {
-    flex: none;
-    width: 300px;
-    /* height: 700px; */
+    width: 320px;
+    height: 650px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    display: flex;
     flex-direction: column;
     background: #ffffff;
     border-radius: 8px;
@@ -612,18 +610,18 @@ textarea {
 }
 
 .records::-webkit-scrollbar-track {
-    background: #f0f0f0;
+    background: #ffffff;
     border-radius: 8px;
 }
 
 .records::-webkit-scrollbar-thumb {
-    background-color: #c1c1c1;
+    background-color: #e4e4e4;
     border-radius: 8px;
     border: 2px solid #f0f0f0;
 }
 
 .records::-webkit-scrollbar-thumb:hover {
-    background-color: #7e7e7e;
+    background-color: #a6a4a4;
 }
 
 
