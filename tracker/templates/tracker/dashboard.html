@@ -494,6 +494,7 @@
             formWarns.style.display = 'none';
             editBtn.disabled = true;
             deleteBtn.disabled = true;
+            addBtn.disabled = false;
         }
     }
 
@@ -511,6 +512,7 @@
     const idInput = document.getElementById('idInput')
     const categoryNameInput = document.getElementById('categoryNameInput');
     const editBtn = document.getElementById('editBtn')
+    const addBtn = document.getElementById('addBtn')
     const deleteBtn = document.getElementById('deleteBtn')
     const formWarns = document.getElementById('formWarns')
     const warningLabel = document.getElementById('warningLabel')
@@ -529,6 +531,7 @@
             emojiBtn.textContent = emoji;
             editBtn.disabled = false;
             deleteBtn.disabled = false;
+            addBtn.disabled = true;
             warningLabel.textContent = emoji + ' ' + categoryName 
             formWarns.style.display = 'flex';  // show the warning label with clear button
             typeSelector.value = type_sel
