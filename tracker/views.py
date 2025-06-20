@@ -190,10 +190,12 @@ def add_transaction(request):
         # Add to transactions DB
         
         # Check category in user created
-        cat = Category.objects.filter(name=category, type=tx_type, user_id=request.user)[0]
+        cat = Category.objects.filter(name=category, type=tx_type, user_id=request.user)
         if not cat: # If not found, check in default
             cat = Category.objects.get(name=category, type=tx_type, user__isnull=True)
-
+        else:
+            cat = cat[0]
+    
         Transaction.objects.create(
             date=date, 
             category=cat,
@@ -221,13 +223,12 @@ def edit_transaction(request):
             date = request.POST.get('date')
             
             transaction = get_object_or_404(Transaction, id=tx_id)
-            category_obj = get_object_or_404(
-                    Category,
-                    user=request.user,
-                    name=category_name,
-                    type=old_data.get('type')
-            )
-            
+            category_obj = Category.objects.filter(name=category_name, type=old_data.get('type'), user_id=request.user)
+            if not category_obj: # If not found, check in default
+                category_obj = Category.objects.get(name=category_name, type=old_data.get('type'), user__isnull=True)
+            else:
+                category_obj = category_obj[0]
+                    
             transaction.category = category_obj
             transaction.note = note
             transaction.amount = amount
